@@ -61,4 +61,16 @@ public class ColaboradorDto {
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
+    @Override
+    public String toString() {
+        return "ColaboradorDto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", matricula='" + matricula + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                '}';
+    }
 }

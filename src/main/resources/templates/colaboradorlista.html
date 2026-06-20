@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Colaboradores</title>
+</head>
+<body>
+
+<h1>Colaboradores Cadastrados</h1>
+
+<p th:if="${mensagem}" th:text="${mensagem}"></p>
+
+<a th:href="@{/colaboradorcadastrar}">
+    Cadastrar Novo Colaborador
+</a>
+
+<br><br>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Matrícula</th>
+        <th>Data de Nascimento</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="colaborador : ${colaboradores}">
+        <td th:text="${colaborador.id}"></td>
+        <td th:text="${colaborador.nome}"></td>
+        <td th:text="${colaborador.email}"></td>
+        <td th:text="${colaborador.matricula}"></td>
+        <td th:text="${colaborador.dataNascimento}"></td>
+        <td>
+            <a th:href="@{/colaborador/editar/{id}(id=${colaborador.id})}">
+                Editar
+            </a>
+        </td>
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(colaboradores)}">
+        <td colspan="6">
+            Nenhum colaborador cadastrado.
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+</html>

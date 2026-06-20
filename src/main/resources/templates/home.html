@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Recursos</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            width: 80%;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 250px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .botao {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .botao:hover {
+            background-color: #1d4ed8;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sistema Gerenciador de Recursos</h1>
+    <p>Bem-vindo ao sistema</p>
+</header>
+
+<main>
+
+    <h2>Menu Principal</h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h2>Colaboradores</h2>
+            <p>Cadastre, consulte e atualize colaboradores.</p>
+
+            <a th:href="@{/colaboradorlista}" class="botao">
+                Listar Colaboradores
+            </a>
+
+            <br><br>
+
+            <a th:href="@{/colaboradorcadastrar}" class="botao">
+                Novo Colaborador
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>Recursos</h2>
+            <p>Área em desenvolvimento.</p>
+        </div>
+
+        <div class="card">
+            <h2>Empréstimos</h2>
+            <p>Área em desenvolvimento.</p>
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>© 2026 - Sistema Gerenciador de Recursos</p>
+</footer>
+
+</body>
+</html>
