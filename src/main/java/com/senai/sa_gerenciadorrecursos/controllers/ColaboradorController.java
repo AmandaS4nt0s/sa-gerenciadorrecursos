@@ -3,6 +3,7 @@ package com.senai.sa_gerenciadorrecursos.controllers;
 import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.services.ColaboradorService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,24 +25,26 @@ public class ColaboradorController {
         if (bindingResult.hasErrors()) {
             return "colaboradorcadastrar";
         }
-
         colaboradorService.cadastrarColaborador(colaboradorDto);
-
         redirectAttributes.addFlashAttribute(
                 "mensagem",
-                "Colaborador cadastrado com sucesso!"
-        );
+                "Colaborador cadastrado com sucesso!");
 
         return "redirect:/colaboradorlista";
     }
-    @PostMapping("/atualizarcolab")
-    public String atualizarColaborador(Model model, @Valid @ModelAttribute("colaborador") ColaboradorDto colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    @PostMapping("/colaboradoratualizar/{id}")
+    public String atualizarColaborador(@PathVariable Long id, @Valid @ModelAttribute("colaborador") ColaboradorDto colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "colaboradoratualizar";
         }
+        colaboradorService.atualizarColaborador(colaboradorDto, id);
         redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso!");
-        colaboradorService.atualizarColaborador(colaboradorDto);
 
         return "redirect:/colaboradorlista";
+    }
+    @DeleteMapping("/colaboradorexcluir/{id}")
+    public ResponseEntity<Void> excluirColaborador(@PathVariable Long id) {
+        colaboradorService.excluirColaborador(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -13,39 +13,44 @@ import java.util.Optional;
 public class ColaboradorService {
 
     private final ColaboradorRepository colaboradorRepository;
-
-    public ColaboradorService(ColaboradorRepository colaboradorRepository) {this.colaboradorRepository = colaboradorRepository;}
-
+    public ColaboradorService(ColaboradorRepository colaboradorRepository) {
+        this.colaboradorRepository = colaboradorRepository;
+    }
     public void cadastrarColaborador(ColaboradorDto colaboradorDto){
-
         colaboradorRepository.save(converterDtoParaEntity(colaboradorDto));
     }
 
-    public void atualizarColaborador(ColaboradorDto colaboradorDto){
+    public void atualizarColaborador(ColaboradorDto colaboradorDto, Long id) {
 
-        Optional<ColaboradorEntity> colaboradorOP = colaboradorRepository.findById(colaboradorDto.getId());
+        ColaboradorEntity colaboradorEntity = colaboradorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
 
-        if (colaboradorOP.isPresent()){
+        colaboradorEntity.setNome(colaboradorDto.getNome());
+        colaboradorEntity.setEmail(colaboradorDto.getEmail());
 
-            ColaboradorEntity colaboradorEntity = colaboradorOP.get();
-            colaboradorEntity.setNome(colaboradorDto.getNome());
-            colaboradorEntity.setEmail(colaboradorDto.getEmail());
-
-            if(!colaboradorDto.getSenha().isEmpty()){
-                colaboradorEntity.setSenha(colaboradorDto.getSenha());
-            }
-            colaboradorRepository.save(colaboradorEntity);
+        if (colaboradorDto.getSenha() != null && !colaboradorDto.getSenha().isEmpty()) {
+            colaboradorEntity.setSenha(colaboradorDto.getSenha());
         }
+        colaboradorRepository.save(colaboradorEntity);
     }
-    public List<ColaboradorDto> listarColaboradores() {
 
+    public List<ColaboradorDto> listarColaboradores() {
         List<ColaboradorDto> listaColaboradores = new ArrayList<>();
 
         for (ColaboradorEntity colaborador : colaboradorRepository.findAll()) {
             listaColaboradores.add(converterEntityParaDto(colaborador));
         }
-
         return listaColaboradores;
+    }
+
+    public ColaboradorDto buscarPorId(Long id) {
+        ColaboradorEntity colaborador = colaboradorRepository.findById(id).orElseThrow(() ->
+                        new RuntimeException("Colaborador não encontrado"));
+        return converterEntityParaDto(colaborador);
+    }
+
+    public void excluirColaborador(Long id) {
+        colaboradorRepository.deleteById(id);
     }
 
     private ColaboradorDto converterEntityParaDto(ColaboradorEntity colaborador){
@@ -58,6 +63,7 @@ public class ColaboradorService {
         colaboradorDto.setDataNascimento(colaborador.getDataNascimento());
         return colaboradorDto;
     }
+
     private ColaboradorEntity converterDtoParaEntity(ColaboradorDto colaboradorDto){
         ColaboradorEntity colaborador = new ColaboradorEntity();
         colaborador.setId(colaboradorDto.getId());

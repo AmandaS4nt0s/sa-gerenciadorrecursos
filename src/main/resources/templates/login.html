@@ -5,109 +5,177 @@
     <title>Login - Gerenciador de Recursos</title>
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 35px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            padding: 60px 20px;
         }
 
         .login-container {
-            background-color: white;
+            background: white;
+            width: 400px;
             padding: 40px;
-            width: 350px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
         }
 
-        h1 {
+        h2 {
             text-align: center;
+            color: #1f2937;
             margin-bottom: 30px;
+        }
+
+        .icone {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 20px;
         }
 
         .campo {
             margin-bottom: 20px;
         }
 
-        label {
+        .campo label {
             display: block;
             margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        button {
+        .campo input {
             width: 100%;
             padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .campo input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .botao {
+            width: 100%;
+            padding: 14px;
             background-color: #2563eb;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 15px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        button:hover {
+        .botao:hover {
             background-color: #1d4ed8;
         }
 
         .erro {
-            color: red;
+            color: #dc2626;
             text-align: center;
             margin-bottom: 20px;
+            font-weight: bold;
         }
 
         .sucesso {
-            color: green;
+            color: #16a34a;
             text-align: center;
             margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            color: gray;
+            margin-top: 20px;
+            padding-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="login-container">
+<header>
+    <h1>Sistema Gerenciador de Recursos</h1>
+    <p>Controle de Colaboradores, Recursos e Empréstimos</p>
+</header>
 
-    <h1>Login</h1>
+<div class="container">
 
-    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
-    <p class="sucesso" th:if="${mensagem}" th:text="${mensagem}"></p>
+    <div class="login-container">
 
-    <form th:action="@{/login}" method="post">
+        <div class="icone">🔐</div>
 
-        <div class="campo">
-            <label for="email">E-mail</label>
-            <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Digite seu e-mail"
-                    required>
-        </div>
+        <h2>Login</h2>
 
-        <div class="campo">
-            <label for="senha">Senha</label>
-            <input
-                    type="password"
-                    id="senha"
-                    name="senha"
-                    placeholder="Digite sua senha"
-                    required>
-        </div>
+        <p class="erro"
+           th:if="${erro}"
+           th:text="${erro}">
+        </p>
 
-        <button type="submit">
-            Entrar
-        </button>
+        <p class="sucesso"
+           th:if="${mensagem}"
+           th:text="${mensagem}">
+        </p>
 
-    </form>
+        <form th:action="@{/login}" method="post">
+
+            <div class="campo">
+                <label for="email">E-mail</label>
+
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required>
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha</label>
+
+                <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required>
+            </div>
+
+            <button type="submit" class="botao">
+                Entrar
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
+
+<footer>
+    © 2026 - Sistema Gerenciador de Recursos
+</footer>
 
 </body>
 </html>

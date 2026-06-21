@@ -31,6 +31,7 @@ public class ColaboradorEntity {
     @NotBlank(message = "A matrícula é obrigatória.")
     private String matricula;
 
+    @Column(name = "data_nascimento")
     @PastOrPresent(message = "A data de nascimento não pode estar no futuro.")
     private LocalDate dataNascimento;
 

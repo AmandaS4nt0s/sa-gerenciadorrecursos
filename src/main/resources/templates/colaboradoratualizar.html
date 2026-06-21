@@ -3,60 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Colaboradores</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 35px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            color: #1f2937;
+            margin-bottom: 25px;
+        }
+
+        .mensagem {
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .botoes {
+            margin-bottom: 30px;
+        }
+
+        .botao {
+            display: inline-block;
+            padding: 12px 20px;
+            margin-right: 10px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background-color: #1d4ed8;
+        }
+
+        .botao-secundario {
+            background-color: #6b7280;
+        }
+
+        .botao-secundario:hover {
+            background-color: #4b5563;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        thead {
+            background-color: #1f2937;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .atualizar {
+            background-color: #2563eb;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .atualizar:hover {
+            background-color: #1d4ed8;
+        }
+
+        .vazio {
+            color: gray;
+            font-style: italic;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            color: gray;
+            margin-top: 40px;
+            padding-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Lista de Colaboradores</h1>
+<header>
+    <h1>Sistema Gerenciador de Recursos</h1>
+    <p>Gerenciamento de Colaboradores</p>
+</header>
 
-<p th:if="${mensagem}" th:text="${mensagem}"></p>
+<div class="container">
 
-<a th:href="@{/colaboradorcadastrar}">
-    Cadastrar Novo Colaborador
-</a>
+    <div class="card">
 
-<br><br>
+        <h2>Colaboradores Cadastrados</h2>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>E-mail</th>
-        <th>Matrícula</th>
-        <th>Data de Nascimento</th>
-        <th>Ações</th>
-    </tr>
-    </thead>
+        <div class="mensagem"
+             th:if="${mensagem}"
+             th:text="${mensagem}">
+        </div>
 
-    <tbody>
+        <div class="botoes">
 
-    <tr th:if="${#lists.isEmpty(colaboradores)}">
-        <td colspan="6">
-            Nenhum colaborador cadastrado.
-        </td>
-    </tr>
-
-    <tr th:each="colaborador : ${colaboradores}">
-        <td th:text="${colaborador.id}"></td>
-        <td th:text="${colaborador.nome}"></td>
-        <td th:text="${colaborador.email}"></td>
-        <td th:text="${colaborador.matricula}"></td>
-        <td th:text="${colaborador.dataNascimento}"></td>
-        <td>
-            <a th:href="@{/colaboradoratualizar/{id}(id=${colaborador.id})}">
-                Editar
+            <a th:href="@{/colaboradorcadastrar}"
+               class="botao">
+                Novo Colaborador
             </a>
-        </td>
-    </tr>
 
-    </tbody>
-</table>
+            <a th:href="@{/home}"
+               class="botao botao-secundario">
+                Voltar ao Menu
+            </a>
 
-<br>
+        </div>
 
-<a th:href="@{/home}">
-    Voltar para Home
-</a>
+        <table>
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Matrícula</th>
+                <th>Data de Nascimento</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:if="${#lists.isEmpty(colaboradores)}">
+                <td colspan="6" class="vazio">
+                    Nenhum colaborador cadastrado.
+                </td>
+            </tr>
+
+            <tr th:each="colaborador : ${colaboradores}">
+                <td th:text="${colaborador.id}"></td>
+                <td th:text="${colaborador.nome}"></td>
+                <td th:text="${colaborador.email}"></td>
+                <td th:text="${colaborador.matricula}"></td>
+                <td th:text="${colaborador.dataNascimento}"></td>
+                <td>
+                    <a class="atualizar"
+                       th:href="@{/colaboradoratualizar/{id}(id=${colaborador.id})}">
+                        Atualizar
+                    </a>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 - Sistema Gerenciador de Recursos
+</footer>
 
 </body>
 </html>

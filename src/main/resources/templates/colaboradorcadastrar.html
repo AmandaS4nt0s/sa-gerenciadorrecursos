@@ -3,73 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastrar Colaborador</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 35px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        .icone {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 30px;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .campo input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .erro {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .botoes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .botao {
+            padding: 12px 25px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        .botao:hover {
+            background-color: #1d4ed8;
+        }
+
+        .botao-secundario {
+            background-color: #6b7280;
+        }
+
+        .botao-secundario:hover {
+            background-color: #4b5563;
+        }
+
+        footer {
+            text-align: center;
+            color: gray;
+            margin-top: 30px;
+            padding-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Cadastrar Colaborador</h1>
+<header>
+    <h1>Sistema Gerenciador de Recursos</h1>
+    <p>Cadastro de Colaboradores</p>
+</header>
 
-<form th:action="@{/cadastrarcolab}"
-      th:object="${colaborador}"
-      method="post">
+<div class="container">
+    <div class="card">
 
-    <div>
-        <label for="nome">Nome:</label>
-        <input type="text"
-               id="nome"
-               th:field="*{nome}"
-               placeholder="Digite o nome">
-        <span th:errors="*{nome}"></span>
+        <div class="icone">👤</div>
+
+        <h2>Cadastrar Colaborador</h2>
+
+        <form th:action="@{/cadastrarcolab}"
+              th:object="${colaborador}"
+              method="post">
+
+            <div class="campo">
+                <label>Nome</label>
+                <input type="text" th:field="*{nome}">
+                <span class="erro" th:errors="*{nome}"></span>
+            </div>
+
+            <div class="campo">
+                <label>E-mail</label>
+                <input type="email" th:field="*{email}">
+                <span class="erro" th:errors="*{email}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Senha</label>
+                <input type="password" th:field="*{senha}">
+                <span class="erro" th:errors="*{senha}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Matrícula</label>
+                <input type="text" th:field="*{matricula}">
+                <span class="erro" th:errors="*{matricula}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Data de Nascimento</label>
+                <input type="date" th:field="*{dataNascimento}">
+                <span class="erro" th:errors="*{dataNascimento}"></span>
+            </div>
+
+            <div class="botoes">
+
+                <button type="submit" class="botao">
+                    Cadastrar
+                </button>
+
+                <a th:href="@{/home}"
+                   class="botao botao-secundario">
+                    Voltar
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
+</div>
 
-    <br>
-
-    <div>
-        <label for="email">E-mail:</label>
-        <input type="email"
-               id="email"
-               th:field="*{email}"
-               placeholder="Digite o e-mail">
-        <span th:errors="*{email}"></span>
-    </div>
-
-    <br>
-
-    <div>
-        <label for="senha">Senha:</label>
-        <input type="password"
-               id="senha"
-               th:field="*{senha}"
-               placeholder="Digite a senha">
-        <span th:errors="*{senha}"></span>
-    </div>
-
-    <br>
-
-    <div>
-        <label for="matricula">Matrícula:</label>
-        <input type="text"
-               id="matricula"
-               th:field="*{matricula}"
-               placeholder="Digite a matrícula">
-        <span th:errors="*{matricula}"></span>
-    </div>
-
-    <br>
-
-    <div>
-        <label for="dataNascimento">Data de Nascimento:</label>
-        <input type="date"
-               id="dataNascimento"
-               th:field="*{dataNascimento}">
-        <span th:errors="*{dataNascimento}"></span>
-    </div>
-
-    <br>
-
-    <button type="submit">Cadastrar</button>
-    <button type="reset">Limpar</button>
-
-</form>
+<footer>
+    © 2026 - Sistema Gerenciador de Recursos
+</footer>
 
 </body>
 </html>
