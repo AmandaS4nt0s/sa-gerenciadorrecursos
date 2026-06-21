@@ -20,9 +20,21 @@ public class ColaboradorService {
         colaboradorRepository.save(converterDtoParaEntity(colaboradorDto));
     }
 
-    public void atualizarColaborador(ColaboradorDto colaboradorDto, Long id) {
+    public ColaboradorDto realizarLogin(ColaboradorDto colaboradorDto){
 
-        ColaboradorEntity colaboradorEntity = colaboradorRepository.findById(id)
+        Optional<ColaboradorEntity> colaboradorOP = colaboradorRepository.findByEmailAndSenha(colaboradorDto.getEmail(), colaboradorDto.getSenha());
+        ColaboradorDto colaboradorDtoRetorno = new ColaboradorDto();
+
+        if (colaboradorOP.isPresent()){
+            colaboradorDtoRetorno = converterEntityParaDto(colaboradorOP.get());
+            return colaboradorDtoRetorno;
+        }
+        return colaboradorDtoRetorno;
+    }
+
+    public void atualizarColaborador(ColaboradorDto colaboradorDto, String email) {
+
+        ColaboradorEntity colaboradorEntity = colaboradorRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
 
         colaboradorEntity.setNome(colaboradorDto.getNome());
