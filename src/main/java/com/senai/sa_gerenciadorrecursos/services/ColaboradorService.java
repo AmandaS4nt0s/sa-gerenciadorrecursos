@@ -3,21 +3,30 @@ package com.senai.sa_gerenciadorrecursos.services;
 import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.entities.ColaboradorEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.ColaboradorRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ColaboradorService {
 
     private final ColaboradorRepository colaboradorRepository;
-    public ColaboradorService(ColaboradorRepository colaboradorRepository) {
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public ColaboradorService(ColaboradorRepository colaboradorRepository, BCryptPasswordEncoder passwordEncoder) {
         this.colaboradorRepository = colaboradorRepository;
+        this.passwordEncoder = passwordEncoder;
     }
+
     public void cadastrarColaborador(ColaboradorDto colaboradorDto){
-        colaboradorRepository.save(converterDtoParaEntity(colaboradorDto));
+        ColaboradorEntity entity = converterDtoParaEntity(colaboradorDto);
+        // Hash da senha antes de salvar
+        if (entity.getSenha() != null && !entity.getSenha().isEmpty()) {
+            entity.setSenha(passwordEncoder.encode(entity.getSenha()));
+        }
+        colaboradorRepository.save(entity);
     }
 
     public void atualizarColaborador(ColaboradorDto colaboradorDto, Long id) {
@@ -28,8 +37,13 @@ public class ColaboradorService {
         colaboradorEntity.setNome(colaboradorDto.getNome());
         colaboradorEntity.setEmail(colaboradorDto.getEmail());
 
+        // Atualiza matrícula e dataNascimento também, se sua interface permitir.
+        colaboradorEntity.setMatricula(colaboradorDto.getMatricula());
+        colaboradorEntity.setDataNascimento(colaboradorDto.getDataNascimento());
+
         if (colaboradorDto.getSenha() != null && !colaboradorDto.getSenha().isEmpty()) {
-            colaboradorEntity.setSenha(colaboradorDto.getSenha());
+            // Hash da nova senha
+            colaboradorEntity.setSenha(passwordEncoder.encode(colaboradorDto.getSenha()));
         }
         colaboradorRepository.save(colaboradorEntity);
     }
