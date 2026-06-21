@@ -5,7 +5,6 @@ import com.senai.sa_gerenciadorrecursos.services.ColaboradorService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,15 +32,20 @@ public class ColaboradorController {
         return "redirect:/colaboradorlista";
     }
     @PostMapping("/colaboradoratualizar/{id}")
-    public String atualizarColaborador(@PathVariable Long id, @Valid @ModelAttribute("colaborador") ColaboradorDto colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String atualizarColaborador(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("colaborador") ColaboradorDto colaboradorDto,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             return "colaboradoratualizar";
         }
         colaboradorService.atualizarColaborador(colaboradorDto, id);
         redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso!");
-
         return "redirect:/colaboradorlista";
     }
+
     @DeleteMapping("/colaboradorexcluir/{id}")
     public ResponseEntity<Void> excluirColaborador(@PathVariable Long id) {
         colaboradorService.excluirColaborador(id);
