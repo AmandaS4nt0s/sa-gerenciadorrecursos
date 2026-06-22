@@ -1,10 +1,11 @@
-/*package com.senai.sa_gerenciadorrecursos.services;
+package com.senai.sa_gerenciadorrecursos.services;
 
 import com.senai.sa_gerenciadorrecursos.dtos.RecursoDto;
 import com.senai.sa_gerenciadorrecursos.entities.RecursoEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.RecursoRepository;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class RecursoService {
 
     private final RecursoRepository recursoRepository;
@@ -12,7 +13,7 @@ public class RecursoService {
     public RecursoService(RecursoRepository recursoRepository) {
         this.recursoRepository = recursoRepository;
     }
-    /*public void cadastrarRecurso(RecursoDto recursoDto){
+    public void cadastrarRecurso(RecursoDto recursoDto){
         recursoRepository.save(converterDtoParaEntity(recursoDto));
     }
     private RecursoDto converterEntityParaDto(RecursoEntity recurso){
@@ -28,7 +29,7 @@ public class RecursoService {
         return recursoDto;
     }
 
-    private RecursoDto converterDtoParaEntity(RecursoDto recursoDto){
+    private RecursoEntity converterDtoParaEntity(RecursoDto recursoDto){
         RecursoEntity recurso = new RecursoEntity();
         recurso.setId(recursoDto.getId());
         recurso.setDescricao(recursoDto.getDescricao());
@@ -41,4 +42,3 @@ public class RecursoService {
         return recurso;
     }
 }
-*/

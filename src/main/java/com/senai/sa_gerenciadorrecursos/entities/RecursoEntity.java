@@ -1,4 +1,4 @@
-/*package com.senai.sa_gerenciadorrecursos.entities;
+package com.senai.sa_gerenciadorrecursos.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table
+@Table (name = "recurso")
 public class RecursoEntity {
 
     @Id
@@ -34,7 +34,7 @@ public class RecursoEntity {
     @FutureOrPresent(message = "A data de fim não pode estar no passado.")
     private LocalDate dataFim;
 
-    @Column(name = "hora_fim")
+    @Column(name = "hora_inicio")
     private LocalTime horaInicio;
 
     @Column(name = "hora_fim")
@@ -107,4 +107,3 @@ public class RecursoEntity {
         this.horaFim = horaFim;
     }
 }
-*/
