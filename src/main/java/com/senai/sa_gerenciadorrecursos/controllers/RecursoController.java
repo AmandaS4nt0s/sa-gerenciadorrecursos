@@ -17,8 +17,8 @@ public class RecursoController {
     public RecursoController(RecursoService recursoService) {
         this.recursoService = recursoService;
     }
-    @PostMapping("/cadastrarrecurso")
-    public String cadastrarRecurso(@Valid @ModelAttribute("recurso") RecursoDto
+    @PostMapping("/recursocadastrar")
+    public String cadastrarRecurso(@Valid @ModelAttribute("recursos") RecursoDto
                                                recursoDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "recursocadastrar";
