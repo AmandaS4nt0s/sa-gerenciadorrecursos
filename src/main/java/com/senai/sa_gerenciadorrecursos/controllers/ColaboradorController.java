@@ -42,7 +42,7 @@ public class ColaboradorController {
         return "login";
     }
 
-    @PostMapping("/cadastrarcolab")
+    @PostMapping("/colaboradorcadastrar")
     public String cadastrarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto
                                                colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
@@ -57,15 +57,15 @@ public class ColaboradorController {
         return "redirect:/colaboradorlista";
     }
 
-    @PostMapping("/colaboradoratualizar/{email}")
-    public String atualizarColaborador(Model model, @PathVariable String email, @Valid @ModelAttribute("colaborador") ColaboradorDto
+    @PostMapping("/colaboradoratualizar/{id}")
+    public String atualizarColaborador(Model model, @PathVariable Long id, @Valid @ModelAttribute("colaborador") ColaboradorDto
             colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "colaboradoratualizar";
         }
         redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso!");
-        colaboradorService.atualizarColaborador(colaboradorDto,email);
+        colaboradorService.atualizarColaborador(colaboradorDto,id);
         return "redirect:/colaboradorlista";
     }
 

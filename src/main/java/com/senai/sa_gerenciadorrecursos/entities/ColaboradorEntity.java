@@ -1,6 +1,7 @@
 package com.senai.sa_gerenciadorrecursos.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -20,6 +21,8 @@ public class ColaboradorEntity {
     private String nome;
 
     @Column(name = "email", unique = true)
+    @NotBlank(message = "O e-mail é obrigatório")
+    @Email(message = "Digite um e-mail válido")
     private String email;
 
     @Column(name = "senha")

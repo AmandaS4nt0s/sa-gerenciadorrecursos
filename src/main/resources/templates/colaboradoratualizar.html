@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Colaboradores</title>
+    <title>Atualizar Colaborador</title>
 
     <style>
         * {
@@ -28,43 +28,75 @@
 
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 700px;
             margin: 50px auto;
         }
 
         .card {
             background: white;
-            padding: 35px;
+            padding: 40px;
             border-radius: 15px;
             box-shadow: 0 3px 15px rgba(0,0,0,0.15);
         }
 
+        .icone {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
         h2 {
+            text-align: center;
             color: #1f2937;
-            margin-bottom: 25px;
-        }
-
-        .mensagem {
-            background-color: #dcfce7;
-            color: #166534;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-
-        .botoes {
             margin-bottom: 30px;
         }
 
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .campo input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .erro {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .botoes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
         .botao {
-            display: inline-block;
-            padding: 12px 20px;
-            margin-right: 10px;
+            padding: 12px 25px;
             background-color: #2563eb;
             color: white;
             text-decoration: none;
+            border: none;
             border-radius: 8px;
+            cursor: pointer;
             transition: 0.3s;
+            font-size: 15px;
         }
 
         .botao:hover {
@@ -79,54 +111,10 @@
             background-color: #4b5563;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        thead {
-            background-color: #1f2937;
-            color: white;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: center;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        tbody tr:hover {
-            background-color: #f8fafc;
-        }
-
-        .atualizar {
-            background-color: #2563eb;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
-            text-decoration: none;
-        }
-
-        .atualizar:hover {
-            background-color: #1d4ed8;
-        }
-
-        .vazio {
-            color: gray;
-            font-style: italic;
-            text-align: center;
-        }
-
         footer {
             text-align: center;
             color: gray;
-            margin-top: 40px;
+            margin-top: 30px;
             padding-bottom: 20px;
         }
     </style>
@@ -135,75 +123,83 @@
 
 <header>
     <h1>Sistema Gerenciador de Recursos</h1>
-    <p>Gerenciamento de Colaboradores</p>
+    <p>Atualização de Colaboradores</p>
 </header>
 
 <div class="container">
-
     <div class="card">
 
-        <h2>Colaboradores Cadastrados</h2>
+        <div class="icone">✏️</div>
 
-        <div class="mensagem"
-             th:if="${mensagem}"
-             th:text="${mensagem}">
-        </div>
+        <h2>Atualizar Colaborador</h2>
 
-        <div class="botoes">
+        <form th:action="@{/colaboradoratualizar/{id}(id=${colaborador.id})}"
+              th:object="${colaborador}"
+              method="post">
 
-            <a th:href="@{/colaboradorcadastrar}"
-               class="botao">
-                Novo Colaborador
-            </a>
+            <input type="hidden" th:field="*{id}">
 
-            <a th:href="@{/home}"
-               class="botao botao-secundario">
-                Voltar ao Menu
-            </a>
+            <div class="campo">
+                <label>Nome</label>
+                <input type="text"
+                       th:field="*{nome}"
+                       required
+                       minlength="3"
+                       maxlength="100">
+                <span class="erro" th:errors="*{nome}"></span>
+            </div>
 
-        </div>
+            <div class="campo">
+                <label>E-mail</label>
+                <input type="email"
+                       th:field="*{email}"
+                       required
+                       maxlength="100"
+                       placeholder="exemplo@email.com">
+                <span class="erro" th:errors="*{email}"></span>
+            </div>
 
-        <table>
+            <div class="campo">
+                <label>Senha</label>
+                <input type="password"
+                       th:field="*{senha}"
+                       required
+                       minlength="5">
+                <span class="erro" th:errors="*{senha}"></span>
+            </div>
 
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Matrícula</th>
-                <th>Data de Nascimento</th>
-                <th>Ações</th>
-            </tr>
-            </thead>
+            <div class="campo">
+                <label>Matrícula</label>
+                <input type="text"
+                       th:field="*{matricula}"
+                       required>
+                <span class="erro" th:errors="*{matricula}"></span>
+            </div>
 
-            <tbody>
+            <div class="campo">
+                <label>Data de Nascimento</label>
+                <input type="date"
+                       th:field="*{dataNascimento}"
+                       required>
+                <span class="erro" th:errors="*{dataNascimento}"></span>
+            </div>
 
-            <tr th:if="${#lists.isEmpty(colaboradores)}">
-                <td colspan="6" class="vazio">
-                    Nenhum colaborador cadastrado.
-                </td>
-            </tr>
+            <div class="botoes">
 
-            <tr th:each="colaborador : ${colaboradores}">
-                <td th:text="${colaborador.id}"></td>
-                <td th:text="${colaborador.nome}"></td>
-                <td th:text="${colaborador.email}"></td>
-                <td th:text="${colaborador.matricula}"></td>
-                <td th:text="${colaborador.dataNascimento}"></td>
-                <td>
-                    <a class="atualizar"
-                       th:href="@{/colaboradoratualizar/{email}(id=${colaborador.email})}">
-                        Atualizar
-                    </a>
-                </td>
-            </tr>
+                <button type="submit" class="botao">
+                    Salvar Alterações
+                </button>
 
-            </tbody>
+                <a th:href="@{/colaboradorlista}"
+                   class="botao botao-secundario">
+                    Cancelar
+                </a>
 
-        </table>
+            </div>
+
+        </form>
 
     </div>
-
 </div>
 
 <footer>

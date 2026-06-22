@@ -32,9 +32,9 @@ public class ColaboradorService {
         return colaboradorDtoRetorno;
     }
 
-    public void atualizarColaborador(ColaboradorDto colaboradorDto, String email) {
+    public void atualizarColaborador(ColaboradorDto colaboradorDto, Long id) {
 
-        ColaboradorEntity colaboradorEntity = colaboradorRepository.findByEmail(email)
+        ColaboradorEntity colaboradorEntity = colaboradorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
 
         colaboradorEntity.setNome(colaboradorDto.getNome());
@@ -55,8 +55,8 @@ public class ColaboradorService {
         return listaColaboradores;
     }
 
-    public ColaboradorDto buscarPorEmail(String email) {
-        ColaboradorEntity colaborador = colaboradorRepository.findByEmail(email).orElseThrow(() ->
+    public ColaboradorDto buscarPorId(Long id) {
+        ColaboradorEntity colaborador = colaboradorRepository.findById(id).orElseThrow(() ->
                         new RuntimeException("Colaborador não encontrado"));
         return converterEntityParaDto(colaborador);
     }
