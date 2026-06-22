@@ -55,8 +55,8 @@ public class ColaboradorService {
         return listaColaboradores;
     }
 
-    public ColaboradorDto buscarPorId(Long id) {
-        ColaboradorEntity colaborador = colaboradorRepository.findById(id).orElseThrow(() ->
+    public ColaboradorDto buscarPorEmail(String email) {
+        ColaboradorEntity colaborador = colaboradorRepository.findByEmail(email).orElseThrow(() ->
                         new RuntimeException("Colaborador não encontrado"));
         return converterEntityParaDto(colaborador);
     }

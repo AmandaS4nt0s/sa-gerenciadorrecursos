@@ -38,9 +38,9 @@ public class PageController {
         return "colaboradorlista";
     }
 
-    @GetMapping("/colaboradoratualizar/{id}")
-    public String atualizarColaborador(@PathVariable Long id, Model model) {
-        ColaboradorDto colaborador = colaboradorService.buscarPorId(id);
+    @GetMapping("/colaboradoratualizar/{email}")
+    public String atualizarColaborador(@PathVariable String email, Model model) {
+        ColaboradorDto colaborador = colaboradorService.buscarPorEmail(email);
         model.addAttribute("colaborador", colaborador);
         return "colaboradoratualizar";
     }

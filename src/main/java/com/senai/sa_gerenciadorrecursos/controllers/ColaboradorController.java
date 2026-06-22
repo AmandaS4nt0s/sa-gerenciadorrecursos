@@ -58,8 +58,8 @@ public class ColaboradorController {
     }
 
     @PostMapping("/colaboradoratualizar/{email}")
-    public String atualizarColaborador(Model model, @Valid @ModelAttribute("colaborador") ColaboradorDto
-            colaboradorDto, String email, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String atualizarColaborador(Model model, @PathVariable String email, @Valid @ModelAttribute("colaborador") ColaboradorDto
+            colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "colaboradoratualizar";
