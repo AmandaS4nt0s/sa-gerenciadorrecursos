@@ -1,4 +1,4 @@
-package com.senai.sa_gerenciadorrecursos.entities;
+/*package com.senai.sa_gerenciadorrecursos.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -107,3 +107,4 @@ public class RecursoEntity {
         this.horaFim = horaFim;
     }
 }
+*/

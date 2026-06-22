@@ -1,4 +1,4 @@
-package com.senai.sa_gerenciadorrecursos.dtos;
+/*package com.senai.sa_gerenciadorrecursos.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -85,3 +85,4 @@ public class RecursoDto {
         this.horaFim = horaFim;
     }
 }
+*/

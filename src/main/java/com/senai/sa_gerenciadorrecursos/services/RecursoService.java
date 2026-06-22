@@ -1,4 +1,4 @@
-package com.senai.sa_gerenciadorrecursos.services;
+/*package com.senai.sa_gerenciadorrecursos.services;
 
 import com.senai.sa_gerenciadorrecursos.dtos.RecursoDto;
 import com.senai.sa_gerenciadorrecursos.entities.RecursoEntity;
@@ -12,10 +12,9 @@ public class RecursoService {
     public RecursoService(RecursoRepository recursoRepository) {
         this.recursoRepository = recursoRepository;
     }
-    public void cadastrarRecurso(RecursoDto recursoDto){
+    /*public void cadastrarRecurso(RecursoDto recursoDto){
         recursoRepository.save(converterDtoParaEntity(recursoDto));
     }
-
     private RecursoDto converterEntityParaDto(RecursoEntity recurso){
         RecursoDto recursoDto = new RecursoDto();
         recursoDto.setId(recurso.getId());
@@ -42,3 +41,4 @@ public class RecursoService {
         return recurso;
     }
 }
+*/

@@ -1,4 +1,4 @@
-package com.senai.sa_gerenciadorrecursos.controllers;
+/*package com.senai.sa_gerenciadorrecursos.controllers;
 
 import com.senai.sa_gerenciadorrecursos.dtos.RecursoDto;
 import com.senai.sa_gerenciadorrecursos.services.RecursoService;
@@ -31,3 +31,4 @@ public class RecursoController {
         return "redirect:/recursolista";
     }
 }
+*/
