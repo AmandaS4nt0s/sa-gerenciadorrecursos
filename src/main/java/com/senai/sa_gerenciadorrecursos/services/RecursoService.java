@@ -53,6 +53,10 @@ public class RecursoService {
         return converterEntityParaDto(recurso);
     }
 
+    public void excluirRecurso(Long id) {
+        recursoRepository.deleteById(id);
+    }
+
     private RecursoDto converterEntityParaDto(RecursoEntity recurso){
         RecursoDto recursoDto = new RecursoDto();
         recursoDto.setId(recurso.getId());
