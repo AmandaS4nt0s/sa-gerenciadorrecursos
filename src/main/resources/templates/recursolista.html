@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Colaboradores</title>
+    <title>Lista de Recursos</title>
 
     <style>
         * {
@@ -26,8 +26,8 @@
         }
 
         .container {
-            width: 90%;
-            max-width: 1200px;
+            width: 95%;
+            max-width: 1400px;
             margin: 40px auto;
         }
 
@@ -81,8 +81,8 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            overflow: hidden;
             border-radius: 10px;
+            overflow: hidden;
         }
 
         thead {
@@ -149,14 +149,14 @@
 
 <header>
     <h1>Sistema Gerenciador de Recursos</h1>
-    <p>Colaboradores</p>
+    <p>Recursos</p>
 </header>
 
 <div class="container">
 
     <div class="card">
 
-        <h2>Colaboradores Cadastrados</h2>
+        <h2>Recursos Cadastrados</h2>
 
         <div class="mensagem"
              th:if="${mensagem}"
@@ -165,8 +165,8 @@
 
         <div class="botoes">
 
-            <a th:href="@{/colaboradorcadastrar}" class="botao">
-                Novo Colaborador
+            <a th:href="@{/recursocadastrar}" class="botao">
+                Novo Recurso
             </a>
 
             <a th:href="@{/home}" class="botao botao-secundario">
@@ -180,40 +180,46 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Matrícula</th>
-                <th>Data de Nascimento</th>
+                <th>Descrição</th>
+                <th>Tipo</th>
+                <th>Dia da Semana</th>
+                <th>Data Início</th>
+                <th>Data Fim</th>
+                <th>Hora Início</th>
+                <th>Hora Fim</th>
                 <th>Ações</th>
             </tr>
             </thead>
 
             <tbody>
 
-            <tr th:each="colaborador : ${colaboradores}">
-                <td th:text="${colaborador.id}"></td>
-                <td th:text="${colaborador.nome}"></td>
-                <td th:text="${colaborador.email}"></td>
-                <td th:text="${colaborador.matricula}"></td>
-                <td th:text="${colaborador.dataNascimento}"></td>
+            <tr th:each="recurso : ${recurso}">
+                <td th:text="${recurso.id}"></td>
+                <td th:text="${recurso.descricao}"></td>
+                <td th:text="${recurso.tipo}"></td>
+                <td th:text="${recurso.diaSemana}"></td>
+                <td th:text="${recurso.dataInicio}"></td>
+                <td th:text="${recurso.dataFim}"></td>
+                <td th:text="${recurso.horaInicio}"></td>
+                <td th:text="${recurso.horaFim}"></td>
 
                 <td>
                     <a class="atualizar"
-                       th:href="@{/colaboradoratualizar/{id}(id=${colaborador.id})}">
+                       th:href="@{/recursoatualizar/{id}(id=${recurso.id})}">
                         Atualizar
                     </a>
 
                     <button type="button"
                             class="excluir"
-                            th:attr="onclick=|excluirColaborador(${colaborador.id})|">
+                            th:attr="onclick=|excluirRecurso(${recurso.id})|">
                         Excluir
                     </button>
                 </td>
             </tr>
 
-            <tr th:if="${#lists.isEmpty(colaboradores)}">
-                <td colspan="6" class="vazio">
-                    Nenhum colaborador cadastrado.
+            <tr th:if="${#lists.isEmpty(recurso)}">
+                <td colspan="9" class="vazio">
+                    Nenhum recurso cadastrado.
                 </td>
             </tr>
 
@@ -230,25 +236,25 @@
 </footer>
 
 <script>
-    function excluirColaborador(id) {
-        if (!confirm('Deseja realmente excluir este colaborador?')) {
+    function excluirRecurso(id) {
+        if (!confirm('Deseja realmente excluir este recurso?')) {
             return;
         }
 
-        fetch('/colaboradorexcluir/' + id, {
+        fetch('/recursoexcluir/' + id, {
             method: 'DELETE'
         })
         .then(response => {
             if (response.ok) {
-                alert('Colaborador excluído com sucesso!');
+                alert('Recurso excluído com sucesso!');
                 window.location.reload();
             } else {
-                alert('Erro ao excluir colaborador.');
+                alert('Erro ao excluir recurso.');
             }
         })
         .catch(error => {
             console.error(error);
-            alert('Erro ao excluir colaborador.');
+            alert('Erro ao excluir recurso.');
         });
     }
 </script>

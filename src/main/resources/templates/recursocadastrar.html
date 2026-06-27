@@ -145,19 +145,19 @@
 
             <div class="campo">
                 <label>Tipo</label>
-                <input type="email" th:field="*{tipo}">
+                <input type="text" th:field="*{tipo}">
                 <span class="erro" th:errors="*{tipo}"></span>
             </div>
 
             <div class="campo">
                 <label>Dia da Semana</label>
-                <input type="password" th:field="*{diaSemana}">
+                <input type="text" th:field="*{diaSemana}">
                 <span class="erro" th:errors="*{diaSemana}"></span>
             </div>
 
             <div class="campo">
                 <label>Data início do agendamento</label>
-                <input type="text" th:field="*{dataInicio}">
+                <input type="date" th:field="*{dataInicio}">
                 <span class="erro" th:errors="*{dataInicio}"></span>
             </div>
 
@@ -169,13 +169,13 @@
 
             <div class="campo">
                 <label>Hora início do agendamento</label>
-                <input type="date" th:field="*{horaInicio}">
+                <input type="time" th:field="*{horaInicio}">
                 <span class="erro" th:errors="*{horaInicio}"></span>
             </div>
 
             <div class="campo">
                 <label>Hora fim do agendamento</label>
-                <input type="date" th:field="*{horaFim}">
+                <input type="time" th:field="*{horaFim}">
                 <span class="erro" th:errors="*{horaFim}"></span>
             </div>
 

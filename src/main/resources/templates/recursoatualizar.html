@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Atualizar Colaborador</title>
+    <title>Atualizar Recurso</title>
 
     <style>
         * {
@@ -123,7 +123,7 @@
 
 <header>
     <h1>Sistema Gerenciador de Recursos</h1>
-    <p>Atualização de Colaboradores</p>
+    <p>Atualização de Recursos</p>
 </header>
 
 <div class="container">
@@ -131,57 +131,63 @@
 
         <div class="icone">✏️</div>
 
-        <h2>Atualizar Colaborador</h2>
+        <h2>Atualizar Recurso</h2>
 
-        <form th:action="@{/colaboradoratualizar/{id}(id=${colaborador.id})}"
-              th:object="${colaborador}"
+        <form th:action="@{/recursoatualizar/{id}(id=${recurso.id})}"
+              th:object="${recurso}"
               method="post">
 
             <input type="hidden" th:field="*{id}">
 
             <div class="campo">
-                <label>Nome</label>
+                <label>Descrição</label>
                 <input type="text"
-                       th:field="*{nome}"
-                       required
-                       minlength="3"
-                       maxlength="100">
-                <span class="erro" th:errors="*{nome}"></span>
-            </div>
-
-            <div class="campo">
-                <label>E-mail</label>
-                <input type="email"
-                       th:field="*{email}"
-                       required
-                       maxlength="100"
-                       placeholder="exemplo@email.com">
-                <span class="erro" th:errors="*{email}"></span>
-            </div>
-
-            <div class="campo">
-                <label>Senha</label>
-                <input type="password"
-                       th:field="*{senha}"
-                       required
-                       minlength="5" disabled>
-                <span class="erro" th:errors="*{senha}"></span>
-            </div>
-
-            <div class="campo">
-                <label>Matrícula</label>
-                <input type="text"
-                       th:field="*{matricula}"
-                       required disabled>
-                <span class="erro" th:errors="*{matricula}"></span>
-            </div>
-
-            <div class="campo">
-                <label>Data de Nascimento</label>
-                <input type="date"
-                       th:field="*{dataNascimento}"
+                       th:field="*{descricao}"
                        required>
-                <span class="erro" th:errors="*{dataNascimento}"></span>
+                <span class="erro" th:errors="*{descricao}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Tipo</label>
+                <input type="text"
+                       th:field="*{tipo}"
+                       required>
+                <span class="erro" th:errors="*{tipo}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Dia da Semana</label>
+                <input type="text"
+                       th:field="*{diaSemana}">
+                <span class="erro" th:errors="*{diaSemana}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Data de Início</label>
+                <input type="date"
+                       th:field="*{dataInicio}">
+                <span class="erro" th:errors="*{dataInicio}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Data de Fim</label>
+                <input type="date"
+                       th:field="*{dataFim}">
+                <span class="erro" th:errors="*{dataFim}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Hora de Início</label>
+                <input type="time"
+                       th:field="*{horaInicio}">
+                <span class="erro" th:errors="*{horaInicio}"></span>
+            </div>
+
+            <div class="campo">
+                <label>Hora de Fim</label>
+                <input type="time"
+                       th:field="*{horaFim}">
+                <span class="erro" th:errors="*{horaFim}"></span>
             </div>
 
             <div class="botoes">
@@ -190,7 +196,7 @@
                     Salvar Alterações
                 </button>
 
-                <a th:href="@{/colaboradorlista}"
+                <a th:href="@{/recursolista}"
                    class="botao botao-secundario">
                     Cancelar
                 </a>

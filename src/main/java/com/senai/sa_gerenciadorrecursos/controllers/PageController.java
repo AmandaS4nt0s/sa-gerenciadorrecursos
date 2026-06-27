@@ -52,7 +52,17 @@ public class PageController {
     //-------------------------- RECURSO --------------------------
     @GetMapping("/recursocadastrar")
     public String cadastrarRecurso(Model model){
-        model.addAttribute("recursos", new RecursoDto());
+        model.addAttribute("recurso", new RecursoDto());
         return "recursocadastrar";
+    }
+    @GetMapping("/recursolista")
+    public String listarRecurso(Model model){
+        model.addAttribute("recurso", recursoService.listarRecursos());
+        return "recursolista";
+    }
+    @GetMapping("/recursoatualizar/{id}")
+    public String atualizarRecurso(@PathVariable Long id, Model model) {
+        model.addAttribute("recurso", recursoService.buscarPorId(id));
+        return "recursoatualizar";
     }
 }

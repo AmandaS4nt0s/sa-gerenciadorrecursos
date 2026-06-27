@@ -1,9 +1,14 @@
 package com.senai.sa_gerenciadorrecursos.services;
 
+import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.dtos.RecursoDto;
+import com.senai.sa_gerenciadorrecursos.entities.ColaboradorEntity;
 import com.senai.sa_gerenciadorrecursos.entities.RecursoEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.RecursoRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RecursoService {
@@ -16,6 +21,38 @@ public class RecursoService {
     public void cadastrarRecurso(RecursoDto recursoDto){
         recursoRepository.save(converterDtoParaEntity(recursoDto));
     }
+
+    public List<RecursoDto> listarRecursos() {
+        List<RecursoDto> listaRecursos = new ArrayList<>();
+
+        for (RecursoEntity recurso : recursoRepository.findAll()) {
+            listaRecursos.add(converterEntityParaDto(recurso));
+        }
+        return listaRecursos;
+    }
+
+    public void atualizarRecurso(RecursoDto recursoDto, Long id) {
+
+        RecursoEntity recurso = recursoRepository.findById(id).orElseThrow(() ->
+                new RuntimeException("Recurso não encontrado"));
+
+        recurso.setDescricao(recursoDto.getDescricao());
+        recurso.setTipo(recursoDto.getTipo());
+        recurso.setDiaSemana(recursoDto.getDiaSemana());
+        recurso.setDataInicio(recursoDto.getDataInicio());
+        recurso.setDataFim(recursoDto.getDataFim());
+        recurso.setHoraInicio(recursoDto.getHoraInicio());
+        recurso.setHoraFim(recursoDto.getHoraFim());
+
+        recursoRepository.save(recurso);
+    }
+
+    public RecursoDto buscarPorId(Long id) {
+        RecursoEntity recurso = recursoRepository.findById(id).orElseThrow(() ->
+                new RuntimeException("Recurso não encontrado"));
+        return converterEntityParaDto(recurso);
+    }
+
     private RecursoDto converterEntityParaDto(RecursoEntity recurso){
         RecursoDto recursoDto = new RecursoDto();
         recursoDto.setId(recurso.getId());
