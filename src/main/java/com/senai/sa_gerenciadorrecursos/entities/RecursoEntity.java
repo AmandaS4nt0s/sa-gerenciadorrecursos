@@ -27,7 +27,6 @@ public class RecursoEntity {
     private String diaSemana;
 
     @Column(name = "data_inicio")
-    @FutureOrPresent(message = "A data de início não pode estar no passado.")
     private LocalDate dataInicio;
 
     @Column(name = "data_fim")
