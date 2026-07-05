@@ -4,7 +4,6 @@ import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.entities.ColaboradorEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.ColaboradorRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

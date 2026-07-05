@@ -3,7 +3,6 @@ package com.senai.sa_gerenciadorrecursos.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 

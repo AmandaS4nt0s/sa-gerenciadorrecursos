@@ -1,8 +1,6 @@
 package com.senai.sa_gerenciadorrecursos.services;
 
-import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.dtos.RecursoDto;
-import com.senai.sa_gerenciadorrecursos.entities.ColaboradorEntity;
 import com.senai.sa_gerenciadorrecursos.entities.RecursoEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.RecursoRepository;
 import org.springframework.stereotype.Service;

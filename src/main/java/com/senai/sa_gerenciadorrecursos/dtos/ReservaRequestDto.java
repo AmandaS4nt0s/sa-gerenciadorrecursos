@@ -3,7 +3,6 @@ package com.senai.sa_gerenciadorrecursos.dtos;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ReservaRequestDto {
