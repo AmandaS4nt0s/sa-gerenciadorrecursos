@@ -1,12 +1,16 @@
 package com.senai.sa_gerenciadorrecursos.services;
 
 import com.senai.sa_gerenciadorrecursos.dtos.RecursoDto;
+import com.senai.sa_gerenciadorrecursos.entities.ColaboradorEntity;
 import com.senai.sa_gerenciadorrecursos.entities.RecursoEntity;
+import com.senai.sa_gerenciadorrecursos.repositories.ColaboradorRepository;
 import com.senai.sa_gerenciadorrecursos.repositories.RecursoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecursoService {
@@ -78,5 +82,14 @@ public class RecursoService {
         recurso.setHoraInicio(recursoDto.getHoraInicio());
         recurso.setHoraFim(recursoDto.getHoraFim());
         return recurso;
+    }
+    @Autowired
+    private RecursoRepository repo;
+
+    public List<RecursoEntity> listarTodosRecursos() {
+        return repo.findAllByOrderByNomeAsc();
+    }
+    public Optional<RecursoEntity> buscarRecursoPorId(Long id) {
+        return repo.findById(id);
     }
 }

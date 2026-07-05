@@ -3,6 +3,7 @@ package com.senai.sa_gerenciadorrecursos.services;
 import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.entities.ColaboradorEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.ColaboradorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,5 +85,14 @@ public class ColaboradorService {
         colaborador.setMatricula(colaboradorDto.getMatricula());
         colaborador.setDataNascimento(colaboradorDto.getDataNascimento());
         return colaborador;
+    }
+    @Autowired
+    private ColaboradorRepository repo;
+
+    public List<ColaboradorEntity> listarTodosColaboradores() {
+        return repo.findAllByOrderByNomeAsc();
+    }
+    public Optional<ColaboradorEntity> buscarColaboradorPorId(Long id) {
+        return repo.findById(id);
     }
 }
