@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Reservas</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            color: #1f2937;
+            margin-bottom: 25px;
+        }
+
+        .mensagem {
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .botoes {
+            margin-bottom: 25px;
+        }
+
+        .botao {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background-color: #1d4ed8;
+        }
+
+        .botao-secundario {
+            background-color: #6b7280;
+        }
+
+        .botao-secundario:hover {
+            background-color: #4b5563;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #1f2937;
+            color: white;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .cancelar {
+            background-color: #dc2626;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .cancelar:hover {
+            background-color: #b91c1c;
+        }
+
+        .vazio {
+            text-align: center;
+            color: gray;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: gray;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Sistema Gerenciador de Recursos</h1>
+    <p>Reservas</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Reservas Cadastradas</h2>
+
+        <div class="mensagem"
+             th:if="${mensagem}"
+             th:text="${mensagem}">
+        </div>
+
+        <div class="botoes">
+
+            <a th:href="@{/reservacadastrar}" class="botao">
+                Nova Reserva
+            </a>
+
+            <a th:href="@{/home}" class="botao botao-secundario">
+                Voltar ao Menu
+            </a>
+
+        </div>
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Colaborador</th>
+                <th>Recurso</th>
+                <th>Data</th>
+                <th>Hora Início</th>
+                <th>Hora Fim</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="reserva : ${reservas}">
+                <td th:text="${reserva.id}"></td>
+                <td th:text="${reserva.colaboradorId}"></td>
+                <td th:text="${reserva.recursoId}"></td>
+                <td th:text="${#dates.format(reserva.data, 'dd/MM/yyyy')}"></td>
+                <td th:text="${reserva.horaInicio}"></td>
+                <td th:text="${reserva.horaFim}"></td>
+                <td th:text="${reserva.status}"></td>
+
+                <td>
+                    <button type="button"
+                            class="cancelar"
+                            th:attr="onclick=|cancelarReserva(${reserva.id})|">
+                        Cancelar
+                    </button>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(reservas)}">
+                <td colspan="8" class="vazio">
+                    Nenhuma reserva cadastrada.
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 - Sistema Gerenciador de Recursos
+</footer>
+
+</body>
+</html>
