@@ -3,6 +3,7 @@ package com.senai.sa_gerenciadorrecursos.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -32,7 +33,7 @@ public class ReservaEntity {
     private LocalTime horaFim;
 
     @Column(name = "data_hora_cancelamento")
-    private LocalDate cancelamento;
+    private LocalDateTime cancelamento;
 
     @Column(name = "observacao")
     private String observacao;
@@ -88,11 +89,11 @@ public class ReservaEntity {
         this.horaFim = horaFim;
     }
 
-    public LocalDate getCancelamento() {
+    public LocalDateTime getCancelamento() {
         return cancelamento;
     }
 
-    public void setCancelamento(LocalDate cancelamento) {
+    public void setCancelamento(LocalDateTime cancelamento) {
         this.cancelamento = cancelamento;
     }
 

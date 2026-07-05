@@ -140,15 +140,15 @@
               method="post">
 
             <div class="campo">
-                <label>ID do Colaborador</label>
-                <input type="number" th:field="*{colaboradorId}" min="1">
-                <span class="erro" th:errors="*{colaboradorId}"></span>
+                <label>Colaborador</label>
+                <input type="id" th:field="*{colaborador}">
+                <span class="erro" th:errors="*{colaborador}"></span>
             </div>
 
             <div class="campo">
-                <label>ID do Recurso</label>
-                <input type="number" th:field="*{recursoId}" min="1">
-                <span class="erro" th:errors="*{recursoId}"></span>
+                <label>Recurso</label>
+                <input type="id" th:field="*{recurso}">
+                <span class="erro" th:errors="*{recurso}"></span>
             </div>
 
             <div class="campo">

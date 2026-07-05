@@ -5,7 +5,7 @@ import com.senai.sa_gerenciadorrecursos.dtos.ReservaResponseDto;
 import com.senai.sa_gerenciadorrecursos.entities.ReservaEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.ReservaRepository;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class ReservaService {
     }
 
     public ReservaResponseDto cadastrarReserva(ReservaRequestDto reservaRequestDto) {
-
-        reservaRepository.save(converterReservaRequestDtoParaEntity(reservaRequestDto));
-        return new ReservaResponseDto();
+        ReservaEntity reserva = converterReservaRequestDtoParaEntity(reservaRequestDto);
+        reservaRepository.save(reserva);
+        return converterEntityParaReservaResponseDto(reserva);
     }
 
     public List<ReservaResponseDto> listarReservas() {
@@ -42,15 +42,24 @@ public class ReservaService {
         ReservaEntity reserva = reservaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reserva não encontrada"));
 
-        LocalDate hoje = LocalDate.now();
-        if (!hoje.isBefore(reserva.getData().minusDays(1))) {
-            throw new RuntimeException("Cancelamento só permitido até 1 dia antes da data agendada");
-        }
         if (observacao == null || observacao.isBlank()) {
             throw new RuntimeException("Motivo do cancelamento é obrigatório");
         }
 
-        reserva.setCancelamento(hoje);
+        if (reserva.getCancelamento() != null) {
+            throw new RuntimeException("Esta reserva já foi cancelada");
+        }
+
+        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime limiteMinimo = reserva.getData()
+                .minusDays(1)
+                .atStartOfDay();
+
+        if (agora.isAfter(limiteMinimo)) {
+            throw new RuntimeException("Cancelamento só permitido até 1 dia antes da data agendada");
+        }
+
+        reserva.setCancelamento(LocalDateTime.now());
         reserva.setObservacao(observacao);
 
         ReservaEntity cancelado = reservaRepository.save(reserva);

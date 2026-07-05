@@ -12,12 +12,10 @@ public class ColaboradorDto {
 
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
-
     @Email
     @NotBlank(message = "O e-mail é obrigatório.")
     private String email;
     private String senha;
-
     @NotBlank(message = "A matrícula é obrigatória.")
     private String matricula;
 
