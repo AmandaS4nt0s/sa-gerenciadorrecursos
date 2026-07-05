@@ -3,8 +3,9 @@ package com.senai.sa_gerenciadorrecursos.services;
 import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.entities.ColaboradorEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.ColaboradorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,27 +14,28 @@ import java.util.Optional;
 public class ColaboradorService {
 
     private final ColaboradorRepository colaboradorRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     public ColaboradorService(ColaboradorRepository colaboradorRepository) {
         this.colaboradorRepository = colaboradorRepository;
     }
     public void cadastrarColaborador(ColaboradorDto colaboradorDto){
-        colaboradorRepository.save(converterDtoParaEntity(colaboradorDto));
+        if (colaboradorRepository.findByEmail(colaboradorDto.getEmail()).isPresent()) {
+            throw new RuntimeException("E-mail já cadastrado.");
+        }
+        ColaboradorEntity entity = converterDtoParaEntity(colaboradorDto);
+        entity.setSenha(passwordEncoder.encode(colaboradorDto.getSenha()));
+        colaboradorRepository.save(entity);
     }
 
     public ColaboradorDto realizarLogin(ColaboradorDto colaboradorDto){
-
-        Optional<ColaboradorEntity> colaboradorOP = colaboradorRepository.findByEmailAndSenha(colaboradorDto.getEmail(), colaboradorDto.getSenha());
-        ColaboradorDto colaboradorDtoRetorno = new ColaboradorDto();
-
-        if (colaboradorOP.isPresent()){
-            colaboradorDtoRetorno = converterEntityParaDto(colaboradorOP.get());
-            return colaboradorDtoRetorno;
+        Optional<ColaboradorEntity> colaboradorOP = colaboradorRepository.findByEmail(colaboradorDto.getEmail());
+        if (colaboradorOP.isPresent() && passwordEncoder.matches(colaboradorDto.getSenha(), colaboradorOP.get().getSenha())) {
+            return converterEntityParaDto(colaboradorOP.get());
         }
-        return colaboradorDtoRetorno;
+        throw new RuntimeException("Credenciais inválidas.");
     }
 
     public void atualizarColaborador(ColaboradorDto colaboradorDto, Long id) {
-
         ColaboradorEntity colaboradorEntity = colaboradorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
 
@@ -41,14 +43,13 @@ public class ColaboradorService {
         colaboradorEntity.setEmail(colaboradorDto.getEmail());
 
         if (colaboradorDto.getSenha() != null && !colaboradorDto.getSenha().isEmpty()) {
-            colaboradorEntity.setSenha(colaboradorDto.getSenha());
+            colaboradorEntity.setSenha(passwordEncoder.encode(colaboradorDto.getSenha()));
         }
         colaboradorRepository.save(colaboradorEntity);
     }
 
     public List<ColaboradorDto> listarColaboradores() {
         List<ColaboradorDto> listaColaboradores = new ArrayList<>();
-
         for (ColaboradorEntity colaborador : colaboradorRepository.findAll()) {
             listaColaboradores.add(converterEntityParaDto(colaborador));
         }
@@ -56,8 +57,8 @@ public class ColaboradorService {
     }
 
     public ColaboradorDto buscarPorId(Long id) {
-        ColaboradorEntity colaborador = colaboradorRepository.findById(id).orElseThrow(() ->
-                        new RuntimeException("Colaborador não encontrado"));
+        ColaboradorEntity colaborador = colaboradorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
         return converterEntityParaDto(colaborador);
     }
 
@@ -86,13 +87,12 @@ public class ColaboradorService {
         colaborador.setDataNascimento(colaboradorDto.getDataNascimento());
         return colaborador;
     }
-    @Autowired
-    private ColaboradorRepository repo;
 
     public List<ColaboradorEntity> listarTodosColaboradores() {
-        return repo.findAllByOrderByNomeAsc();
+        return colaboradorRepository.findAllByOrderByNomeAsc();
     }
+
     public Optional<ColaboradorEntity> buscarColaboradorPorId(Long id) {
-        return repo.findById(id);
+        return colaboradorRepository.findById(id);
     }
 }
