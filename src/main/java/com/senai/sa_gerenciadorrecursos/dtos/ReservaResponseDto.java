@@ -19,7 +19,6 @@ public class ReservaResponseDto {
     private LocalTime horaInicio;
     private LocalTime horaFim;
     private LocalDateTime cancelamento;
-    @NotBlank(message = "É obrigatório informar o motivo do cancelamento no campo Observação.")
     private String observacao;
 
     public ReservaResponseDto() {
