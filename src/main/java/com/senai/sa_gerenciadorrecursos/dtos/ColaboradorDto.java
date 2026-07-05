@@ -8,17 +8,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 public class ColaboradorDto {
-    private Long id;
 
+    private Long id;
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
     @Email
     @NotBlank(message = "O e-mail é obrigatório.")
     private String email;
+    @NotBlank(message = "A senha é obrigatória.")
     private String senha;
     @NotBlank(message = "A matrícula é obrigatória.")
     private String matricula;
-
     @Past(message = "A data de nascimento não pode estar no futuro.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;

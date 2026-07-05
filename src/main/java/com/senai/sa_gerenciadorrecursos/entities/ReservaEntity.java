@@ -1,7 +1,6 @@
 package com.senai.sa_gerenciadorrecursos.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -15,12 +14,12 @@ public class ReservaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "colaborador")
-    @NotNull(message = "O colaborador é obrigatório.")
-    private Long colaborador;
-    @Column(name = "recurso")
-    @NotNull(message = "O recurso é obrigatório.")
-    private Long recurso;
+    @ManyToOne
+    @JoinColumn(name = "colaborador_id", nullable = false)
+    private ColaboradorEntity colaborador;
+    @ManyToOne
+    @JoinColumn(name = "recurso_id", nullable = false)
+    private RecursoEntity recurso;
     @Column(name = "data_reserva")
     @NotNull(message = "A data é obrigatória.")
     private LocalDate data;
@@ -36,6 +35,7 @@ public class ReservaEntity {
     public ReservaEntity() {
     }
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -44,19 +44,19 @@ public class ReservaEntity {
         this.id = id;
     }
 
-    public Long getColaborador() {
+    public ColaboradorEntity getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(Long colaborador) {
+    public void setColaborador(ColaboradorEntity colaborador) {
         this.colaborador = colaborador;
     }
 
-    public Long getRecurso() {
+    public RecursoEntity getRecurso() {
         return recurso;
     }
 
-    public void setRecurso(Long recurso) {
+    public void setRecurso(RecursoEntity recurso) {
         this.recurso = recurso;
     }
 
@@ -89,7 +89,10 @@ public class ReservaEntity {
     }
 
     public void setCancelamento(LocalDateTime cancelamento) {
-        this.cancelamento = cancelamento;
+        if (data != null && LocalDate.now().isAfter(data.minusDays(1))) {
+            throw new IllegalArgumentException("Cancelamento só pode ser feito até 1 dia antes da reserva.");
+        }
+        this.cancelamento = LocalDateTime.now();
     }
 
     public String getObservacao() {
@@ -97,6 +100,9 @@ public class ReservaEntity {
     }
 
     public void setObservacao(String observacao) {
+        if (this.cancelamento != null && (observacao == null || observacao.isBlank())) {
+            throw new IllegalArgumentException("Motivo do cancelamento é obrigatório.");
+        }
         this.observacao = observacao;
     }
 }

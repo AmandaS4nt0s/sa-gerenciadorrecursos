@@ -1,8 +1,6 @@
 package com.senai.sa_gerenciadorrecursos.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,9 +9,9 @@ public class ReservaResponseDto {
 
     private Long id;
     @NotNull(message = "O colaborador é obrigatório.")
-    private Long colaborador;
+    private ColaboradorDto colaborador;
     @NotNull(message = "O recurso é obrigatório.")
-    private Long recurso;
+    private RecursoDto recurso;
     @NotNull(message = "A data é obrigatória.")
     private LocalDate data;
     private LocalTime horaInicio;
@@ -32,19 +30,19 @@ public class ReservaResponseDto {
         this.id = id;
     }
 
-    public Long getColaborador() {
+    public ColaboradorDto getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(Long colaborador) {
+    public void setColaborador(ColaboradorDto colaborador) {
         this.colaborador = colaborador;
     }
 
-    public Long getRecurso() {
+    public RecursoDto getRecurso() {
         return recurso;
     }
 
-    public void setRecurso(Long recurso) {
+    public void setRecurso(RecursoDto recurso) {
         this.recurso = recurso;
     }
 

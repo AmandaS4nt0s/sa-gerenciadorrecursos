@@ -3,9 +3,12 @@ package com.senai.sa_gerenciadorrecursos.repositories;
 import com.senai.sa_gerenciadorrecursos.entities.ReservaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.List;
 
 public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
 
-    Optional<ReservaEntity> findById(Long id);
+    List<ReservaEntity> findByColaboradorId(Long colaboradorId);
+    List<ReservaEntity> findByRecursoId(Long recursoId);
+    List<ReservaEntity> findByData(LocalDate data);
 }

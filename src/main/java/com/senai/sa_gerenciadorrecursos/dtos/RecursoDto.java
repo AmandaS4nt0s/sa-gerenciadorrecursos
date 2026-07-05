@@ -1,9 +1,9 @@
 package com.senai.sa_gerenciadorrecursos.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class RecursoDto {
 
@@ -12,7 +12,7 @@ public class RecursoDto {
     private String descricao;
     @NotBlank(message = "O Tipo é obrigatório.")
     private String tipo;
-    private String diaSemana;
+    private List<String> diasSemanaDisponiveis;
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private LocalTime horaInicio;
@@ -45,12 +45,12 @@ public class RecursoDto {
         this.tipo = tipo;
     }
 
-    public String getDiaSemana() {
-        return diaSemana;
+    public List<String> getDiasSemanaDisponiveis() {
+        return diasSemanaDisponiveis;
     }
 
-    public void setDiaSemana(String diasSemana) {
-        this.diaSemana = diasSemana;
+    public void setDiasSemanaDisponiveis(List<String> diasSemanaDisponiveis) {
+        this.diasSemanaDisponiveis = diasSemanaDisponiveis;
     }
 
     public LocalDate getDataInicio() {
