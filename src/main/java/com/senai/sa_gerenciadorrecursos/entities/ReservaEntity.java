@@ -34,7 +34,10 @@ public class ReservaEntity {
     private LocalTime horaFim;
 
     @Column(name = "data_hora_cancelamento")
-    private LocalDateTime cancelamento;
+    private LocalDate cancelamento;
+
+    @Column(name = "observacao")
+    private String observacao;
 
     public ReservaEntity() {
     }
@@ -87,11 +90,19 @@ public class ReservaEntity {
         this.horaFim = horaFim;
     }
 
-    public LocalDateTime getCancelamento() {
+    public LocalDate getCancelamento() {
         return cancelamento;
     }
 
-    public void setCancelamento(LocalDateTime cancelamento) {
+    public void setCancelamento(LocalDate cancelamento) {
         this.cancelamento = cancelamento;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 }

@@ -17,6 +17,8 @@ public class ReservaRequestDto {
     private LocalDate data;
     private LocalTime horaInicio;
     private LocalTime horaFim;
+    @NotBlank(message = "É obrigatório informar o motivo do cancelamento no campo Observação.")
+    private String observacao;
 
     public ReservaRequestDto() {
     }
@@ -67,5 +69,13 @@ public class ReservaRequestDto {
 
     public void setHoraFim(LocalTime horaFim) {
         this.horaFim = horaFim;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 }

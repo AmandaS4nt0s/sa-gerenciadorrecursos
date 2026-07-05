@@ -16,6 +16,7 @@ public class RecursoService {
     private final RecursoRepository recursoRepository;
 
     public RecursoService(RecursoRepository recursoRepository) {
+
         this.recursoRepository = recursoRepository;
     }
     public void cadastrarRecurso(RecursoDto recursoDto){
@@ -59,7 +60,6 @@ public class RecursoService {
 
     private RecursoDto converterEntityParaDto(RecursoEntity recurso){
         RecursoDto recursoDto = new RecursoDto();
-        recursoDto.setId(recurso.getId());
         recursoDto.setDescricao(recurso.getDescricao());
         recursoDto.setTipo(recurso.getTipo());
         recursoDto.setDiaSemana(recurso.getDiaSemana());
@@ -72,7 +72,6 @@ public class RecursoService {
 
     private RecursoEntity converterDtoParaEntity(RecursoDto recursoDto){
         RecursoEntity recurso = new RecursoEntity();
-        recurso.setId(recursoDto.getId());
         recurso.setDescricao(recursoDto.getDescricao());
         recurso.setTipo(recursoDto.getTipo());
         recurso.setDiaSemana(recursoDto.getDiaSemana());
