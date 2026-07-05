@@ -2,6 +2,8 @@ package com.senai.sa_gerenciadorrecursos.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,28 +15,21 @@ public class ReservaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "colaborador")
-    @NotBlank(message = "O colaborador é obrigatório.")
+    @NotNull(message = "O colaborador é obrigatório.")
     private Long colaborador;
-
     @Column(name = "recurso")
-    @NotBlank(message = "O recurso é obrigatório.")
+    @NotNull(message = "O recurso é obrigatório.")
     private Long recurso;
-
     @Column(name = "data_reserva")
-    @NotBlank(message = "A data é obrigatória.")
+    @NotNull(message = "A data é obrigatória.")
     private LocalDate data;
-
     @Column(name = "hora_inicio_reserva")
     private LocalTime horaInicio;
-
     @Column(name = "hora_fim_reserva")
     private LocalTime horaFim;
-
     @Column(name = "data_hora_cancelamento")
     private LocalDateTime cancelamento;
-
     @Column(name = "observacao")
     private String observacao;
 
