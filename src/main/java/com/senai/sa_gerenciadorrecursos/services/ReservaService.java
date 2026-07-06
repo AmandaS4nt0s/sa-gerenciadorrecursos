@@ -35,6 +35,9 @@ public class ReservaService {
     public ReservaResponseDto cadastrarReserva(ReservaRequestDto reservaRequestDto) {
         validarReserva(reservaRequestDto);
 
+        System.out.println("Colaborador ID: " + reservaRequestDto.getColaboradorId());
+        System.out.println("Recurso ID: " + reservaRequestDto.getRecursoId());
+
         ReservaEntity reservaEntity = converterReservaRequestDtoParaEntity(reservaRequestDto);
 
         reservaRepository.save(reservaEntity);
@@ -48,7 +51,6 @@ public class ReservaService {
         for (ReservaEntity reservaEntity : reservaRepository.findAll()) {
             listaReservas.add(converterEntityParaReservaResponseDto(reservaEntity));
         }
-
         return listaReservas;
     }
 
@@ -154,8 +156,6 @@ public class ReservaService {
         colaboradorDto.setMatricula(colaboradorEntity.getMatricula());
         colaboradorDto.setDataNascimento(colaboradorEntity.getDataNascimento());
 
-        reservaResponseDto.setColaborador(colaboradorDto);
-
         RecursoEntity recursoEntity = reservaEntity.getRecurso();
 
         RecursoDto recursoDto = new RecursoDto();
@@ -168,14 +168,14 @@ public class ReservaService {
         recursoDto.setHoraInicio(recursoEntity.getHoraInicio());
         recursoDto.setHoraFim(recursoEntity.getHoraFim());
 
-        reservaResponseDto.setRecurso(recursoDto);
-
         reservaResponseDto.setData(reservaEntity.getData());
         reservaResponseDto.setHoraInicio(reservaEntity.getHoraInicio());
         reservaResponseDto.setHoraFim(reservaEntity.getHoraFim());
         reservaResponseDto.setCancelamento(reservaEntity.getCancelamento());
         reservaResponseDto.setObservacao(reservaEntity.getObservacao());
 
+        reservaResponseDto.setNomeColaborador(reservaEntity.getColaborador().getNome());
+        reservaResponseDto.setDescricaoRecurso(reservaEntity.getRecurso().getDescricao());
         return reservaResponseDto;
     }
 }

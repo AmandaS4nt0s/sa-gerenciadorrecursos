@@ -182,8 +182,8 @@
 
             <tr th:each="reserva : ${reserva}">
                 <td th:text="${reserva.id}"></td>
-                <td th:text="${reserva.colaboradorId}"></td>
-                <td th:text="${reserva.recursoId}"></td>
+                <td th:text="${reserva.nomeColaborador}"></td>
+                <td th:text="${reserva.descricaoRecurso}"></td>
                 <td th:text="${#dates.format(reserva.data, 'dd/MM/yyyy')}"></td>
                 <td th:text="${reserva.horaInicio}"></td>
                 <td th:text="${reserva.horaFim}"></td>

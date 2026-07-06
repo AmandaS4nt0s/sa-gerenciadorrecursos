@@ -9,15 +9,17 @@ public class ReservaResponseDto {
 
     private Long id;
     @NotNull(message = "O colaborador é obrigatório.")
-    private ColaboradorDto colaborador;
+    private Long colaborador;
     @NotNull(message = "O recurso é obrigatório.")
-    private RecursoDto recurso;
+    private Long recurso;
     @NotNull(message = "A data é obrigatória.")
     private LocalDate data;
     private LocalTime horaInicio;
     private LocalTime horaFim;
     private LocalDateTime cancelamento;
     private String observacao;
+    private String nomeColaborador;
+    private String descricaoRecurso;
 
     public ReservaResponseDto() {
     }
@@ -30,19 +32,19 @@ public class ReservaResponseDto {
         this.id = id;
     }
 
-    public ColaboradorDto getColaborador() {
+    public Long getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(ColaboradorDto colaborador) {
+    public void setColaborador(Long colaborador) {
         this.colaborador = colaborador;
     }
 
-    public RecursoDto getRecurso() {
+    public Long getRecurso() {
         return recurso;
     }
 
-    public void setRecurso(RecursoDto recurso) {
+    public void setRecurso(Long recurso) {
         this.recurso = recurso;
     }
 
@@ -84,5 +86,21 @@ public class ReservaResponseDto {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public String getNomeColaborador() {
+        return nomeColaborador;
+    }
+
+    public void setNomeColaborador(String nomeColaborador) {
+        this.nomeColaborador = nomeColaborador;
+    }
+
+    public String getDescricaoRecurso() {
+        return descricaoRecurso;
+    }
+
+    public void setDescricaoRecurso(String descricaoRecurso) {
+        this.descricaoRecurso = descricaoRecurso;
     }
 }

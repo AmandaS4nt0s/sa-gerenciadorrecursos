@@ -28,18 +28,15 @@ public class ColaboradorEntity {
     @Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres.")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,}$", message = "A senha deve conter letras e números.")
     private String senha;
-
     @Column(name = "matricula")
     @NotBlank(message = "A matrícula é obrigatória.")
     private String matricula;
-
     @Column(name = "data_nascimento")
     @PastOrPresent(message = "A data de nascimento não pode estar no futuro.")
     private LocalDate dataNascimento;
 
     public ColaboradorEntity() {}
 
-    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
