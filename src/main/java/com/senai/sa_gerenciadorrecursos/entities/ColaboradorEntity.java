@@ -16,13 +16,17 @@ public class ColaboradorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "nome")
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
+
     @Column(name = "email", unique = true)
     @NotBlank(message = "O e-mail é obrigatório.")
     @Email(message = "Digite um e-mail válido.")
     private String email;
+
+
     @Column(name = "senha")
     @NotBlank(message = "A senha é obrigatória.")
     @Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres.")

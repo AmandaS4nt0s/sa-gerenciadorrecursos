@@ -6,6 +6,9 @@ import com.senai.sa_gerenciadorrecursos.dtos.ReservaRequestDto;
 import com.senai.sa_gerenciadorrecursos.services.ColaboradorService;
 import com.senai.sa_gerenciadorrecursos.services.RecursoService;
 import com.senai.sa_gerenciadorrecursos.services.ReservaService;
+import com.senai.sa_gerenciadorrecursos.sessao.SessaoDto;
+import com.senai.sa_gerenciadorrecursos.sessao.SessaoUtil;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,19 +37,35 @@ public class PageController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String getHome(Model model, HttpSession session){
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/";
+        }
+        model.addAttribute("usuarioLogado",sessaoDto);
         return "home";
     }
 
     //-------------------------- COLABORADOR --------------------------
     @GetMapping("/colaboradorcadastrar")
     public String colaboradorCadastrar(Model model) {
+
+
         model.addAttribute("colaborador", new ColaboradorDto());
         return "colaboradorcadastrar";
     }
 
     @GetMapping("/colaboradorlista")
-    public String colaboradorLista(Model model) {
+    public String colaboradorLista(Model model,HttpSession session) {
+
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/";
+        }
         model.addAttribute("colaboradores", colaboradorService.listarColaboradores());
         return "colaboradorlista";
     }

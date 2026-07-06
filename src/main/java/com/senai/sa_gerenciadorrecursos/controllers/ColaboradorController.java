@@ -2,6 +2,8 @@ package com.senai.sa_gerenciadorrecursos.controllers;
 
 import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.services.ColaboradorService;
+import com.senai.sa_gerenciadorrecursos.sessao.SessaoUtil;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,12 @@ public class ColaboradorController {
         //-- retorna erro no login
         model.addAttribute("erro","E-mail ou senha invalidos.");
         return "login";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        SessaoUtil.RemoverSessao(session);
+        return "redirect:/login";
     }
 
     @PostMapping("/colaboradorcadastrar")
