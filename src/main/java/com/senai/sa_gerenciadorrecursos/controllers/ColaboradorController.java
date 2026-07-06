@@ -24,23 +24,30 @@ public class ColaboradorController {
     @PostMapping("/login")
     public String realizarLogin(String email, String senha, Model model, RedirectAttributes redirectAttributes) {
 
-        //--Criação de objeto dto para enviara dados para o service
-        ColaboradorDto colaboradorDto = new ColaboradorDto();
-        colaboradorDto.setEmail(email);
-        colaboradorDto.setSenha(senha);
+        try {
+            //--Criação de objeto dto para enviara dados para o service
+            ColaboradorDto colaboradorDto = new ColaboradorDto();
+            colaboradorDto.setEmail(email);
+            colaboradorDto.setSenha(senha);
 
-        //--Realiza login no banco de dados
-        ColaboradorDto colaboradorDtoRetorno = colaboradorService.realizarLogin(colaboradorDto);
+            //--Realiza login no banco de dados
+            ColaboradorDto colaboradorDtoRetorno = colaboradorService.realizarLogin(colaboradorDto);
 
-        //--Verifica se retonar dados do usuário significa que deu certo
-        if (colaboradorDtoRetorno.getNome() != null) {
+            //--Verifica se retonar dados do usuário significa que deu certo
+            if (colaboradorDtoRetorno.getNome() != null) {
 
-            redirectAttributes.addFlashAttribute("usuario", " Bem-vindo " + colaboradorDtoRetorno.getNome());
-            return "redirect:/home";
+                redirectAttributes.addFlashAttribute("usuario", " Bem-vindo " + colaboradorDtoRetorno.getNome());
+                return "redirect:/home";
 
+            }
+        } catch (RuntimeException e) {
+            //-- retorna erro no login
+            model.addAttribute("erro", "E-mail ou senha inválidos.");
+            return "login";
         }
+
         //-- retorna erro no login
-        model.addAttribute("erro","E-mail ou senha invalidos.");
+        model.addAttribute("erro", "E-mail ou senha inválidos.");
         return "login";
     }
 
