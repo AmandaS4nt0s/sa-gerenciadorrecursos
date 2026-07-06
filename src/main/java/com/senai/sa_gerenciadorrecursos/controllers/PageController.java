@@ -64,24 +64,21 @@ public class PageController {
         return "recursocadastrar";
     }
     @GetMapping("/recursolista")
-    public String listarRecurso(Model model){
+    public String recursoLista(Model model){
         model.addAttribute("recurso", recursoService.listarRecursos());
         return "recursolista";
     }
     @GetMapping("/recursoatualizar/{id}")
     public String atualizarRecurso(@PathVariable Long id, Model model) {
-        model.addAttribute("recurso", recursoService.buscarPorId(id));
+        RecursoDto recurso = recursoService.buscarPorId(id);
+        model.addAttribute("recurso", recurso);
         return "recursoatualizar";
     }
     //-------------------------- RESERVA --------------------------
     @GetMapping("/reservacadastrar")
-    public String cadastrarReserva(@Valid @ModelAttribute("reservas") ReservaRequestDto reservaRequestDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            return "reservacadastrar";
-        }
-        reservaService.cadastrarReserva(reservaRequestDto);
-        redirectAttributes.addFlashAttribute("mensagem", "Reserva realizada com sucesso!");
-        return "redirect:/reservalista";
+    public String cadastrarReserva(Model model) {
+        model.addAttribute("reserva", new ReservaRequestDto());
+        return "reservacadastrar";
     }
     @GetMapping("/reservalista")
     public String listarReservas(Model model) {

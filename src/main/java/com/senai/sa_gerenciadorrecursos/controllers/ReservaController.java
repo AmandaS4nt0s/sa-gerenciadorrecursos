@@ -21,14 +21,14 @@ public class ReservaController {
     }
 
     @PostMapping("/reservacadastrar")
-    public String cadastrarReserva(@Valid @ModelAttribute("reservas") ReservaRequestDto reservaRequestDto,
-                                   BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes) {
+    public String cadastrarReserva(@Valid @ModelAttribute("reserva") ReservaRequestDto reservaRequestDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             return "reservacadastrar";
         }
         reservaService.cadastrarReserva(reservaRequestDto);
-        redirectAttributes.addFlashAttribute("mensagem", "Reserva realizada com sucesso!");
+        redirectAttributes.addFlashAttribute("mensagem",
+                "Reserva realizada com sucesso!");
         return "redirect:/reservalista";
     }
 

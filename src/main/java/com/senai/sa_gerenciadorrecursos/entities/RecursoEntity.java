@@ -14,31 +14,24 @@ public class RecursoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "descricao")
     @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
-
     @Column(name = "tipo")
     @NotBlank(message = "O tipo é obrigatório.")
     private String tipo;
-
     @ElementCollection
     @CollectionTable(name = "recurso_dias_semana", joinColumns = @JoinColumn(name = "recurso_id"))
     @Column(name = "dia_semana")
     private List<String> diasSemanaDisponiveis;
-
     @Column(name = "data_inicio")
     @FutureOrPresent(message = "A data de início não pode estar no passado.")
     private LocalDate dataInicio;
-
     @Column(name = "data_fim")
     @FutureOrPresent(message = "A data de fim não pode estar no passado.")
     private LocalDate dataFim;
-
     @Column(name = "hora_inicio")
     private LocalTime horaInicio;
-
     @Column(name = "hora_fim")
     private LocalTime horaFim;
 

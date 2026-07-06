@@ -95,6 +95,7 @@ public class RecursoService {
 
     private RecursoDto converterEntityParaDto(RecursoEntity recurso){
         RecursoDto recursoDto = new RecursoDto();
+        recursoDto.setId(recurso.getId());
         recursoDto.setDescricao(recurso.getDescricao());
         recursoDto.setTipo(recurso.getTipo());
         recursoDto.setDiasSemanaDisponiveis(recurso.getDiasSemanaDisponiveis());

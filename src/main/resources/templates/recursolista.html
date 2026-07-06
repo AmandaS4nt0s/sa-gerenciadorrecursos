@@ -197,7 +197,16 @@
                 <td th:text="${recurso.id}"></td>
                 <td th:text="${recurso.descricao}"></td>
                 <td th:text="${recurso.tipo}"></td>
-                <td th:text="${recurso.diaSemana}"></td>
+
+                <td>
+            <span th:if="${recurso.diasSemanaDisponiveis != null and !#lists.isEmpty(recurso.diasSemanaDisponiveis)}"
+                  th:text="${#strings.listJoin(recurso.diasSemanaDisponiveis, ', ')}">
+            </span>
+                    <span th:if="${recurso.diasSemanaDisponiveis == null or #lists.isEmpty(recurso.diasSemanaDisponiveis)}">
+                -
+            </span>
+                </td>
+
                 <td th:text="${recurso.dataInicio}"></td>
                 <td th:text="${recurso.dataFim}"></td>
                 <td th:text="${recurso.horaInicio}"></td>
