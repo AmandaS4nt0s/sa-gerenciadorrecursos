@@ -2,7 +2,7 @@ package com.senai.sa_gerenciadorrecursos.sessao;
 
 public class SessaoDto {
 
-    private long usuarioid;
+    private Long usuarioid;
     private String usuarioNome;
 
     public SessaoDto() {
@@ -12,7 +12,7 @@ public class SessaoDto {
         return usuarioid;
     }
 
-    public void setUsuarioid(long usuarioid) {
+    public void setUsuarioid(Long usuarioid) {
         this.usuarioid = usuarioid;
     }
 

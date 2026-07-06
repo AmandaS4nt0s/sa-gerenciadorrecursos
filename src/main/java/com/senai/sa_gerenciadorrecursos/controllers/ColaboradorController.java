@@ -2,6 +2,7 @@ package com.senai.sa_gerenciadorrecursos.controllers;
 
 import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
 import com.senai.sa_gerenciadorrecursos.services.ColaboradorService;
+import com.senai.sa_gerenciadorrecursos.sessao.SessaoDto;
 import com.senai.sa_gerenciadorrecursos.sessao.SessaoUtil;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ public class ColaboradorController {
     }
 
     @PostMapping("/login")
-    public String realizarLogin(String email, String senha, Model model, RedirectAttributes redirectAttributes) {
+    public String realizarLogin(String email, String senha, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
 
         try {
             //--Criação de objeto dto para enviara dados para o service
@@ -36,19 +37,21 @@ public class ColaboradorController {
             //--Verifica se retonar dados do usuário significa que deu certo
             if (colaboradorDtoRetorno.getNome() != null) {
 
+                SessaoDto sessaoDto = new SessaoDto();
+                sessaoDto.setUsuarioid(colaboradorDtoRetorno.getId());
+                sessaoDto.setUsuarioNome(colaboradorDto.getNome());
+                SessaoUtil.RegistrarSessao(session, sessaoDto);
+
                 redirectAttributes.addFlashAttribute("usuario", " Bem-vindo " + colaboradorDtoRetorno.getNome());
                 return "redirect:/home";
-
             }
+
         } catch (RuntimeException e) {
             //-- retorna erro no login
             model.addAttribute("erro", "E-mail ou senha inválidos.");
             return "login";
         }
-
-        //-- retorna erro no login
-        model.addAttribute("erro", "E-mail ou senha inválidos.");
-        return "login";
+        return "redirect:/login";
     }
 
     @PostMapping("/logout")

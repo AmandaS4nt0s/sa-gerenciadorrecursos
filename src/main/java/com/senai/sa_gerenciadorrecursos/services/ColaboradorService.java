@@ -35,7 +35,9 @@ public class ColaboradorService {
         if (colaboradorOP.isPresent()) {
             return converterEntityParaDto(colaboradorOP.get());
         }
-        throw new RuntimeException("Credenciais inválidas.");
+        else {
+            throw new RuntimeException("Credenciais inválidas.");
+        }
     }
 
     public void atualizarColaborador(ColaboradorDto colaboradorDto, Long id) {
