@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ColaboradorService {
 
     private final ColaboradorRepository colaboradorRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public ColaboradorService(ColaboradorRepository colaboradorRepository) {
         this.colaboradorRepository = colaboradorRepository;
     }
@@ -23,13 +23,17 @@ public class ColaboradorService {
             throw new RuntimeException("E-mail já cadastrado.");
         }
         ColaboradorEntity entity = converterDtoParaEntity(colaboradorDto);
-        entity.setSenha(passwordEncoder.encode(colaboradorDto.getSenha()));
+        entity.setSenha(colaboradorDto.getSenha());
         colaboradorRepository.save(entity);
     }
 
     public ColaboradorDto realizarLogin(ColaboradorDto colaboradorDto){
-        Optional<ColaboradorEntity> colaboradorOP = colaboradorRepository.findByEmail(colaboradorDto.getEmail());
-        if (colaboradorOP.isPresent() && passwordEncoder.matches(colaboradorDto.getSenha(), colaboradorOP.get().getSenha())) {
+
+        System.out.println(colaboradorDto.getEmail());
+        System.out.println(colaboradorDto.getSenha());
+
+        Optional<ColaboradorEntity> colaboradorOP = colaboradorRepository.findByEmailAndSenha(colaboradorDto.getEmail(),colaboradorDto.getSenha());
+        if (colaboradorOP.isPresent()) {
             return converterEntityParaDto(colaboradorOP.get());
         }
         throw new RuntimeException("Credenciais inválidas.");
@@ -43,7 +47,7 @@ public class ColaboradorService {
         colaboradorEntity.setEmail(colaboradorDto.getEmail());
 
         if (colaboradorDto.getSenha() != null && !colaboradorDto.getSenha().isEmpty()) {
-            colaboradorEntity.setSenha(passwordEncoder.encode(colaboradorDto.getSenha()));
+            colaboradorEntity.setSenha(colaboradorDto.getSenha());
         }
         colaboradorRepository.save(colaboradorEntity);
     }
