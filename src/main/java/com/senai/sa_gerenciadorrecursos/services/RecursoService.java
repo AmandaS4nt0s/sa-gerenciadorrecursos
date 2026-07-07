@@ -31,7 +31,6 @@ public class RecursoService {
 
         recurso.setDescricao(recursoDto.getDescricao());
         recurso.setTipo(recursoDto.getTipo());
-        recurso.setDiasSemanaDisponiveis(recursoDto.getDiasSemanaDisponiveis());
         recurso.setDataInicio(recursoDto.getDataInicio());
         recurso.setDataFim(recursoDto.getDataFim());
         recurso.setHoraInicio(recursoDto.getHoraInicio());
@@ -66,9 +65,6 @@ public class RecursoService {
         if (recursoDto.getTipo() == null || recursoDto.getTipo().isBlank()) {
             throw new RuntimeException("O tipo do recurso é obrigatório.");
         }
-        if (recursoDto.getDataInicio() != null && recursoDto.getDataInicio().isBefore(LocalDate.now())) {
-            throw new RuntimeException("A data de início não pode estar no passado.");
-        }
         if (recursoDto.getDataFim() != null && recursoDto.getDataInicio() != null &&
                 recursoDto.getDataFim().isBefore(recursoDto.getDataInicio())) {
             throw new RuntimeException("A data final não pode ser anterior à data inicial.");
@@ -83,14 +79,6 @@ public class RecursoService {
                 recursoDto.getHoraFim().isBefore(recursoDto.getHoraInicio())) {
             throw new RuntimeException("Horário final deve ser maior que o horário inicial.");
         }
-        if (recursoDto.getDiasSemanaDisponiveis() != null && !recursoDto.getDiasSemanaDisponiveis().isEmpty()) {
-            List<String> diasValidos = List.of("SEGUNDA","TERÇA","QUARTA","QUINTA","SEXTA","SÁBADO","DOMINGO");
-            for (String dia : recursoDto.getDiasSemanaDisponiveis()) {
-                if (!diasValidos.contains(dia.toUpperCase())) {
-                    throw new RuntimeException("Dia da semana inválido: " + dia + ". Use apenas: " + diasValidos);
-                }
-            }
-        }
     }
 
     private RecursoDto converterEntityParaDto(RecursoEntity recurso){
@@ -98,7 +86,13 @@ public class RecursoService {
         recursoDto.setId(recurso.getId());
         recursoDto.setDescricao(recurso.getDescricao());
         recursoDto.setTipo(recurso.getTipo());
-        recursoDto.setDiasSemanaDisponiveis(recurso.getDiasSemanaDisponiveis());
+        recursoDto.setSegundaFeira(recurso.getSegundaFeira());
+        recursoDto.setTercaFeira(recurso.getTercaFeira());
+        recursoDto.setQuartaFeira(recurso.getQuartaFeira());
+        recursoDto.setQuintaFeira(recurso.getQuintaFeira());
+        recursoDto.setSextaFeira(recurso.getSextaFeira());
+        recursoDto.setSabado(recurso.getSabado());
+        recursoDto.setDomingo(recurso.getDomingo());
         recursoDto.setDataInicio(recurso.getDataInicio());
         recursoDto.setDataFim(recurso.getDataFim());
         recursoDto.setHoraInicio(recurso.getHoraInicio());
@@ -110,7 +104,13 @@ public class RecursoService {
         RecursoEntity recurso = new RecursoEntity();
         recurso.setDescricao(recursoDto.getDescricao());
         recurso.setTipo(recursoDto.getTipo());
-        recurso.setDiasSemanaDisponiveis(recursoDto.getDiasSemanaDisponiveis());
+        recurso.setSegundaFeira(recursoDto.getSegundaFeira());
+        recurso.setTercaFeira(recursoDto.getTercaFeira());
+        recurso.setQuartaFeira(recursoDto.getQuartaFeira());
+        recurso.setQuintaFeira(recursoDto.getQuintaFeira());
+        recurso.setSextaFeira(recursoDto.getSextaFeira());
+        recurso.setSabado(recursoDto.getSabado());
+        recurso.setDomingo(recursoDto.getDomingo());
         recurso.setDataInicio(recursoDto.getDataInicio());
         recurso.setDataFim(recursoDto.getDataFim());
         recurso.setHoraInicio(recursoDto.getHoraInicio());

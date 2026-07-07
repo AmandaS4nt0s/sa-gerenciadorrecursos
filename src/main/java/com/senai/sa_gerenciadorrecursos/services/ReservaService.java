@@ -162,7 +162,6 @@ public class ReservaService {
         recursoDto.setId(recursoEntity.getId());
         recursoDto.setDescricao(recursoEntity.getDescricao());
         recursoDto.setTipo(recursoEntity.getTipo());
-        recursoDto.setDiasSemanaDisponiveis(recursoEntity.getDiasSemanaDisponiveis());
         recursoDto.setDataInicio(recursoEntity.getDataInicio());
         recursoDto.setDataFim(recursoEntity.getDataFim());
         recursoDto.setHoraInicio(recursoEntity.getHoraInicio());
