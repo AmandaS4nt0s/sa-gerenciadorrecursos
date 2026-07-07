@@ -12,7 +12,15 @@ public class RecursoDto {
     private String descricao;
     @NotBlank(message = "O Tipo é obrigatório.")
     private String tipo;
-    private List<String> diasSemanaDisponiveis;
+
+    private Boolean segundaFeira;
+    private Boolean tercaFeira;
+    private Boolean quartaFeira;
+    private Boolean quintaFeira;
+    private Boolean sextaFeira;
+    private Boolean sabado;
+    private Boolean domingo;
+
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private LocalTime horaInicio;
@@ -45,12 +53,60 @@ public class RecursoDto {
         this.tipo = tipo;
     }
 
-    public List<String> getDiasSemanaDisponiveis() {
-        return diasSemanaDisponiveis;
+    public Boolean getSegundaFeira() {
+        return segundaFeira;
     }
 
-    public void setDiasSemanaDisponiveis(List<String> diasSemanaDisponiveis) {
-        this.diasSemanaDisponiveis = diasSemanaDisponiveis;
+    public void setSegundaFeira(Boolean segundaFeira) {
+        this.segundaFeira = segundaFeira;
+    }
+
+    public Boolean getTercaFeira() {
+        return tercaFeira;
+    }
+
+    public void setTercaFeira(Boolean tercaFeira) {
+        this.tercaFeira = tercaFeira;
+    }
+
+    public Boolean getQuartaFeira() {
+        return quartaFeira;
+    }
+
+    public void setQuartaFeira(Boolean quartaFeira) {
+        this.quartaFeira = quartaFeira;
+    }
+
+    public Boolean getQuintaFeira() {
+        return quintaFeira;
+    }
+
+    public void setQuintaFeira(Boolean quintaFeira) {
+        this.quintaFeira = quintaFeira;
+    }
+
+    public Boolean getSextaFeira() {
+        return sextaFeira;
+    }
+
+    public void setSextaFeira(Boolean sextaFeira) {
+        this.sextaFeira = sextaFeira;
+    }
+
+    public Boolean getSabado() {
+        return sabado;
+    }
+
+    public void setSabado(Boolean sabado) {
+        this.sabado = sabado;
+    }
+
+    public Boolean getDomingo() {
+        return domingo;
+    }
+
+    public void setDomingo(Boolean domingo) {
+        this.domingo = domingo;
     }
 
     public LocalDate getDataInicio() {

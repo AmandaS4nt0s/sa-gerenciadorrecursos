@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Atualizar Recurso</title>
@@ -61,7 +61,9 @@
             font-weight: bold;
         }
 
-        .campo input {
+        .campo input[type="text"],
+        .campo input[type="date"],
+        .campo input[type="time"] {
             width: 100%;
             padding: 12px;
             border: 1px solid #d1d5db;
@@ -72,6 +74,63 @@
         .campo input:focus {
             outline: none;
             border-color: #2563eb;
+        }
+
+        /* Estilos adicionais para os novos elementos de dias */
+        .botoes-atalho {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-atalho {
+            padding: 6px 12px;
+            font-size: 13px;
+            border: 1px solid #d1d5db;
+            background-color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-atalho:hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .btn-limpar {
+            color: #dc2626;
+            border-color: #fca5a5;
+        }
+
+        .btn-limpar:hover {
+            background-color: #fee2e2;
+            border-color: #dc2626;
+        }
+
+        .grid-dias {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-container input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
 
         .erro {
@@ -155,11 +214,64 @@
                 <span class="erro" th:errors="*{tipo}"></span>
             </div>
 
+            <!-- NOVA SEÇÃO: Seleção dos Dias da Semana após o "Tipo" -->
             <div class="campo">
-                <label>Dia da Semana</label>
-                <input type="text"
-                       th:field="*{diasSemanaDisponiveis}">
-                <span class="erro" th:errors="*{diasSemanaDisponiveis}"></span>
+                <label>Dias da Semana Disponíveis</label>
+
+                <!-- Botões de Atalho Rápido -->
+                <div class="botoes-atalho">
+                    <button type="button" class="btn-atalho" onclick="selecionarDias('todos')">Todos</button>
+                    <button type="button" class="btn-atalho" onclick="selecionarDias('uteis')">Dias Úteis</button>
+                    <button type="button" class="btn-atalho" onclick="selecionarDias('fds')">Finais de Semana</button>
+                    <button type="button" class="btn-atalho btn-limpar" onclick="selecionarDias('nenhum')">Limpar
+                    </button>
+                </div>
+
+                <!-- Grid com as caixas de seleção mapeadas para o Thymeleaf -->
+                <div class="grid-dias">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="dia-check" th:field="*{segundaFeira}" value="MONDAY"
+                               data-tipo="util">
+                        Segunda
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="dia-check" th:field="*{tercaFeira}" value="TUESDAY"
+                               data-tipo="util">
+                        Terça
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="dia-check" th:field="*{quartaFeira}" value="WEDNESDAY"
+                               data-tipo="util">
+                        Quarta
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="dia-check" th:field="*{quintaFeira}" value="THURSDAY"
+                               data-tipo="util">
+                        Quinta
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="dia-check" th:field="*{sextaFeira}" value="FRIDAY"
+                               data-tipo="util">
+                        Sexta
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="dia-check" th:field="*{sabado}" value="SATURDAY"
+                               data-tipo="fds">
+                        Sábado
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="dia-check" th:field="*{domingo}" value="SUNDAY"
+                               data-tipo="fds">
+                        Domingo
+                    </label>
+                </div>
+                <span class="erro" th:errors="*{segundaFeira}"></span>
+                <span class="erro" th:errors="*{tercaFeira}"></span>
+                <span class="erro" th:errors="*{quartaFeira}"></span>
+                <span class="erro" th:errors="*{quintaFeira}"></span>
+                <span class="erro" th:errors="*{sextaFeira}"></span>
+                <span class="erro" th:errors="*{sabado}"></span>
+                <span class="erro" th:errors="*{domingo}"></span>
             </div>
 
             <div class="campo">
@@ -191,16 +303,13 @@
             </div>
 
             <div class="botoes">
-
                 <button type="submit" class="botao">
                     Salvar Alterações
                 </button>
-
                 <a th:href="@{/recursolista}"
                    class="botao botao-secundario">
                     Cancelar
                 </a>
-
             </div>
 
         </form>
@@ -211,6 +320,20 @@
 <footer>
     © 2026 - Sistema Gerenciador de Recursos
 </footer>
+
+<!-- Script JavaScript integrado para controlar os botões de atalho -->
+<script>
+    function selecionarDias(tipo) {
+      const checkboxes = document.querySelectorAll('.dia-check');
+
+      checkboxes.forEach(cb => {
+        if (tipo === 'todos') cb.checked = true;
+        else if (tipo === 'nenhum') cb.checked = false;
+        else if (tipo === 'uteis') cb.checked = cb.getAttribute('data-tipo') === 'util';
+        else if (tipo === 'fds') cb.checked = cb.getAttribute('data-tipo') === 'fds';
+      });
+    }
+</script>
 
 </body>
 </html>

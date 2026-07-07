@@ -20,12 +20,21 @@ public class RecursoEntity {
     @Column(name = "tipo")
     @NotBlank(message = "O tipo é obrigatório.")
     private String tipo;
-    @ElementCollection
-    @CollectionTable(name = "recurso_dias_semana", joinColumns = @JoinColumn(name = "recurso_id"))
-    @Column(name = "dia_semana")
-    private List<String> diasSemanaDisponiveis;
+    @Column(name = "segunda_feira")
+    private Boolean segundaFeira;
+    @Column(name = "terca_feira")
+    private Boolean tercaFeira;
+    @Column(name = "quarta_feira")
+    private Boolean quartaFeira;
+    @Column(name = "quinta_feira")
+    private Boolean quintaFeira;
+    @Column(name = "sexta_feira")
+    private Boolean sextaFeira;
+    @Column(name = "sabado")
+    private Boolean sabado;
+    @Column(name = "domingo")
+    private Boolean domingo;
     @Column(name = "data_inicio")
-    @FutureOrPresent(message = "A data de início não pode estar no passado.")
     private LocalDate dataInicio;
     @Column(name = "data_fim")
     @FutureOrPresent(message = "A data de fim não pode estar no passado.")
@@ -46,8 +55,61 @@ public class RecursoEntity {
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public List<String> getDiasSemanaDisponiveis() { return diasSemanaDisponiveis; }
-    public void setDiasSemanaDisponiveis(List<String> diasSemanaDisponiveis) { this.diasSemanaDisponiveis = diasSemanaDisponiveis; }
+    public Boolean getSegundaFeira() {
+        return segundaFeira;
+    }
+
+    public void setSegundaFeira(Boolean segundaFeira) {
+        this.segundaFeira = segundaFeira;
+    }
+
+    public Boolean getTercaFeira() {
+        return tercaFeira;
+    }
+
+    public void setTercaFeira(Boolean tercaFeira) {
+        this.tercaFeira = tercaFeira;
+    }
+
+    public Boolean getQuartaFeira() {
+        return quartaFeira;
+    }
+
+    public void setQuartaFeira(Boolean quartaFeira) {
+        this.quartaFeira = quartaFeira;
+    }
+
+    public Boolean getQuintaFeira() {
+        return quintaFeira;
+    }
+
+    public void setQuintaFeira(Boolean quintaFeira) {
+        this.quintaFeira = quintaFeira;
+    }
+
+    public Boolean getSextaFeira() {
+        return sextaFeira;
+    }
+
+    public void setSextaFeira(Boolean sextaFeira) {
+        this.sextaFeira = sextaFeira;
+    }
+
+    public Boolean getSabado() {
+        return sabado;
+    }
+
+    public void setSabado(Boolean sabado) {
+        this.sabado = sabado;
+    }
+
+    public Boolean getDomingo() {
+        return domingo;
+    }
+
+    public void setDomingo(Boolean domingo) {
+        this.domingo = domingo;
+    }
 
     public LocalDate getDataInicio() { return dataInicio; }
     public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }

@@ -104,6 +104,24 @@
             background-color: #f8fafc;
         }
 
+        /* Estilização para as tags de dias da semana */
+        .container-badges {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge-dia {
+            background-color: #e2e8f0;
+            color: #334155;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
         .atualizar {
             background-color: #2563eb;
             color: white;
@@ -182,7 +200,7 @@
                 <th>ID</th>
                 <th>Descrição</th>
                 <th>Tipo</th>
-                <th>Dia da Semana</th>
+                <th>Dias Disponíveis</th>
                 <th>Data Início</th>
                 <th>Data Fim</th>
                 <th>Hora Início</th>
@@ -198,13 +216,28 @@
                 <td th:text="${recurso.descricao}"></td>
                 <td th:text="${recurso.tipo}"></td>
 
+                <!-- Coluna unificada avaliando as variáveis individuais de dias do seu objeto -->
                 <td>
-            <span th:if="${recurso.diasSemanaDisponiveis != null and !#lists.isEmpty(recurso.diasSemanaDisponiveis)}"
-                  th:text="${#strings.listJoin(recurso.diasSemanaDisponiveis, ', ')}">
-            </span>
-                    <span th:if="${recurso.diasSemanaDisponiveis == null or #lists.isEmpty(recurso.diasSemanaDisponiveis)}">
-                -
-            </span>
+                    <div class="container-badges">
+                        <span th:if="${recurso.segundaFeira == true or recurso.segundaFeira == 'true' or recurso.segundaFeira == 'MONDAY'}" class="badge-dia">Seg</span>
+                        <span th:if="${recurso.tercaFeira == true or recurso.tercaFeira == 'true' or recurso.tercaFeira == 'TUESDAY'}" class="badge-dia">Ter</span>
+                        <span th:if="${recurso.quartaFeira == true or recurso.quartaFeira == 'true' or recurso.quartaFeira == 'WEDNESDAY'}" class="badge-dia">Qua</span>
+                        <span th:if="${recurso.quintaFeira == true or recurso.quintaFeira == 'true' or recurso.quintaFeira == 'THURSDAY'}" class="badge-dia">Qui</span>
+                        <span th:if="${recurso.sextaFeira == true or recurso.sextaFeira == 'true' or recurso.sextaFeira == 'FRIDAY'}" class="badge-dia">Sex</span>
+                        <span th:if="${recurso.sabado == true or recurso.sabado == 'true' or recurso.sabado == 'SATURDAY'}" class="badge-dia">Sáb</span>
+                        <span th:if="${recurso.domingo == true or recurso.domingo == 'true' or recurso.domingo == 'SUNDAY'}" class="badge-dia">Dom</span>
+
+                        <!-- Mensagem padrão caso nenhuma variável de dia esteja ativa -->
+                        <span class="vazio" th:if="${
+                            (recurso.segundaFeira == null or recurso.segundaFeira == false or recurso.segundaFeira == 'false') and
+                            (recurso.tercaFeira == null or recurso.tercaFeira == false or recurso.tercaFeira == 'false') and
+                            (recurso.quartaFeira == null or recurso.quartaFeira == false or recurso.quartaFeira == 'false') and
+                            (recurso.quintaFeira == null or recurso.quintaFeira == false or recurso.quintaFeira == 'false') and
+                            (recurso.sextaFeira == null or recurso.sextaFeira == false or recurso.sextaFeira == 'false') and
+                            (recurso.sabado == null or recurso.sabado == false or recurso.sabado == 'false') and
+                            (recurso.domingo == null or recurso.domingo == false or recurso.domingo == 'false')
+                        }">Nenhum</span>
+                    </div>
                 </td>
 
                 <td th:text="${recurso.dataInicio}"></td>
