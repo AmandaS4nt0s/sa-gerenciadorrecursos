@@ -29,6 +29,11 @@ public class PageController {
     }
 
     @GetMapping("/")
+    public String Login(HttpSession session) {
+        return "login";
+    }
+
+    @GetMapping("/login")
     public String getLogin(HttpSession session) {
         return "login";
     }
