@@ -61,18 +61,29 @@ public class ColaboradorController {
     }
 
     @PostMapping("/colaboradorcadastrar")
-    public String cadastrarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto
-                                               colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String cadastrarColaborador(
+            @Valid @ModelAttribute("colaborador") ColaboradorDto colaboradorDto,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            Model model) {
 
         if (bindingResult.hasErrors()) {
             return "colaboradorcadastrar";
         }
-        colaboradorService.cadastrarColaborador(colaboradorDto);
-        redirectAttributes.addFlashAttribute(
-                "mensagem",
-                "Colaborador cadastrado com sucesso!");
 
-        return "redirect:/colaboradorlista";
+        try {
+            colaboradorService.cadastrarColaborador(colaboradorDto);
+
+            redirectAttributes.addFlashAttribute(
+                    "mensagem",
+                    "Colaborador cadastrado com sucesso!");
+
+            return "redirect:/colaboradorlista";
+
+        } catch (RuntimeException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "colaboradorcadastrar";
+        }
     }
 
     @PostMapping("/colaboradoratualizar/{id}")
