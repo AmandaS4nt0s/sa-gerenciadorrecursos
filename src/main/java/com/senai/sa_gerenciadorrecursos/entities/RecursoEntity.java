@@ -3,6 +3,7 @@ package com.senai.sa_gerenciadorrecursos.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -44,16 +45,32 @@ public class RecursoEntity {
     @Column(name = "hora_fim")
     private LocalTime horaFim;
 
-    public RecursoEntity() {}
+    public RecursoEntity() {
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     public Boolean getSegundaFeira() {
         return segundaFeira;
@@ -111,25 +128,35 @@ public class RecursoEntity {
         this.domingo = domingo;
     }
 
-    public LocalDate getDataInicio() { return dataInicio; }
-    public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
 
-    public LocalDate getDataFim() { return dataFim; }
-    public void setDataFim(LocalDate dataFim) { this.dataFim = dataFim; }
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
 
-    public LocalTime getHoraInicio() { return horaInicio; }
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
     public void setHoraInicio(LocalTime horaInicio) {
-        if (horaInicio.isBefore(LocalTime.of(8,0))) {
-            throw new IllegalArgumentException("Horário inicial deve ser a partir das 08h.");
-        }
         this.horaInicio = horaInicio;
     }
 
-    public LocalTime getHoraFim() { return horaFim; }
+    public LocalTime getHoraFim() {
+        return horaFim;
+    }
+
     public void setHoraFim(LocalTime horaFim) {
-        if (horaFim.isAfter(LocalTime.of(18,0))) {
-            throw new IllegalArgumentException("Horário final deve ser até as 18h.");
-        }
         this.horaFim = horaFim;
     }
 }

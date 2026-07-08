@@ -31,6 +31,13 @@ public class RecursoService {
 
         recurso.setDescricao(recursoDto.getDescricao());
         recurso.setTipo(recursoDto.getTipo());
+        recurso.setSegundaFeira(recursoDto.getSegundaFeira());
+        recurso.setTercaFeira(recursoDto.getTercaFeira());
+        recurso.setQuartaFeira(recursoDto.getQuartaFeira());
+        recurso.setQuintaFeira(recursoDto.getQuintaFeira());
+        recurso.setSextaFeira(recursoDto.getSextaFeira());
+        recurso.setSabado(recursoDto.getSabado());
+        recurso.setDomingo(recursoDto.getDomingo());
         recurso.setDataInicio(recursoDto.getDataInicio());
         recurso.setDataFim(recursoDto.getDataFim());
         recurso.setHoraInicio(recursoDto.getHoraInicio());
@@ -68,12 +75,6 @@ public class RecursoService {
         if (recursoDto.getDataFim() != null && recursoDto.getDataInicio() != null &&
                 recursoDto.getDataFim().isBefore(recursoDto.getDataInicio())) {
             throw new RuntimeException("A data final não pode ser anterior à data inicial.");
-        }
-        if (recursoDto.getHoraInicio() != null && recursoDto.getHoraInicio().isBefore(LocalTime.of(8,0))) {
-            throw new RuntimeException("Horário inicial deve ser a partir das 08h.");
-        }
-        if (recursoDto.getHoraFim() != null && recursoDto.getHoraFim().isAfter(LocalTime.of(18,0))) {
-            throw new RuntimeException("Horário final deve ser até as 18h.");
         }
         if (recursoDto.getHoraInicio() != null && recursoDto.getHoraFim() != null &&
                 recursoDto.getHoraFim().isBefore(recursoDto.getHoraInicio())) {
