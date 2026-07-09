@@ -1,6 +1,7 @@
 package com.senai.sa_gerenciadorrecursos.controllers;
 
 import com.senai.sa_gerenciadorrecursos.dtos.ColaboradorDto;
+import com.senai.sa_gerenciadorrecursos.repositories.ColaboradorRepository;
 import com.senai.sa_gerenciadorrecursos.services.ColaboradorService;
 import com.senai.sa_gerenciadorrecursos.sessao.SessaoDto;
 import com.senai.sa_gerenciadorrecursos.sessao.SessaoUtil;
@@ -74,9 +75,7 @@ public class ColaboradorController {
         try {
             colaboradorService.cadastrarColaborador(colaboradorDto);
 
-            redirectAttributes.addFlashAttribute(
-                    "mensagem",
-                    "Colaborador cadastrado com sucesso!");
+            redirectAttributes.addFlashAttribute("mensagem", "Colaborador cadastrado com sucesso!");
 
             return "redirect:/colaboradorlista";
 
@@ -94,7 +93,7 @@ public class ColaboradorController {
             return "colaboradoratualizar";
         }
         redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso!");
-        colaboradorService.atualizarColaborador(colaboradorDto,id);
+        colaboradorService.atualizarColaborador(colaboradorDto, id);
         return "redirect:/colaboradorlista";
     }
 

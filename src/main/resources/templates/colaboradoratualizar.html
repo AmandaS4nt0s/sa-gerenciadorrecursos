@@ -176,6 +176,7 @@
                        maxlength="100"
                        placeholder="exemplo@email.com">
                 <span class="erro" th:errors="*{email}"></span>
+                <span class="erro" th:text="${erro}"></span>
             </div>
 
             <div class="campo">
@@ -223,6 +224,18 @@
 <footer>
     © 2026 - Sistema Gerenciador de Recursos
 </footer>
+<script>
+    const campo = document.getElementById("dataNascimento");
 
+    const hoje = new Date();
+
+    // Data máxima: hoje
+    campo.max = hoje.toISOString().split("T")[0];
+
+    // Data mínima: hoje - 500 anos
+    const dataMinima = new Date();
+    dataMinima.setFullYear(dataMinima.getFullYear() - 500);
+    campo.min = dataMinima.toISOString().split("T")[0];
+</script>
 </body>
 </html>

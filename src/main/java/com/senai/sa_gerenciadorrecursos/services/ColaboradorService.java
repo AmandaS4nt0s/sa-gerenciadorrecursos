@@ -21,9 +21,9 @@ public class ColaboradorService {
         if (colaboradorRepository.findByEmail(colaboradorDto.getEmail()).isPresent()) {
             throw new RuntimeException("E-mail já cadastrado.");
         }
-        ColaboradorEntity entity = converterDtoParaEntity(colaboradorDto);
-        entity.setSenha(colaboradorDto.getSenha());
-        colaboradorRepository.save(entity);
+        ColaboradorEntity colaboradorEntity = converterDtoParaEntity(colaboradorDto);
+        colaboradorEntity.setSenha(colaboradorDto.getSenha());
+        colaboradorRepository.save(colaboradorEntity);
     }
 
     public ColaboradorDto realizarLogin(ColaboradorDto colaboradorDto){
@@ -46,6 +46,9 @@ public class ColaboradorService {
 
         colaboradorEntity.setNome(colaboradorDto.getNome());
         colaboradorEntity.setEmail(colaboradorDto.getEmail());
+        colaboradorEntity.setSenha(colaboradorDto.getSenha());
+        colaboradorEntity.setMatricula(colaboradorDto.getMatricula());
+        colaboradorEntity.setDataNascimento(colaboradorDto.getDataNascimento());
 
         if (colaboradorDto.getSenha() != null && !colaboradorDto.getSenha().isEmpty()) {
             colaboradorEntity.setSenha(colaboradorDto.getSenha());
@@ -79,6 +82,7 @@ public class ColaboradorService {
         colaboradorDto.setSenha(colaborador.getSenha());
         colaboradorDto.setMatricula(colaborador.getMatricula());
         colaboradorDto.setDataNascimento(colaborador.getDataNascimento());
+
         return colaboradorDto;
     }
 
@@ -90,14 +94,7 @@ public class ColaboradorService {
         colaborador.setSenha(colaboradorDto.getSenha());
         colaborador.setMatricula(colaboradorDto.getMatricula());
         colaborador.setDataNascimento(colaboradorDto.getDataNascimento());
+
         return colaborador;
-    }
-
-    public List<ColaboradorEntity> listarTodosColaboradores() {
-        return colaboradorRepository.findAllByOrderByNomeAsc();
-    }
-
-    public Optional<ColaboradorEntity> buscarColaboradorPorId(Long id) {
-        return colaboradorRepository.findById(id);
     }
 }

@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface ColaboradorRepository extends JpaRepository<ColaboradorEntity, Long> {
 
-    List<ColaboradorEntity> findAllByOrderByNomeAsc();
     Optional<ColaboradorEntity> findByEmail(String email);
     Optional<ColaboradorEntity> findByEmailAndSenha(String email,String senha);
 }

@@ -24,7 +24,7 @@ public class RecursoController {
     }
 
     @PostMapping("/recursocadastrar")
-    public String cadastrarRecurso(@Valid @ModelAttribute("recursos") RecursoDto recursoDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String cadastrarRecurso(@Valid @ModelAttribute("recurso") RecursoDto recursoDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "recursocadastrar";
         }

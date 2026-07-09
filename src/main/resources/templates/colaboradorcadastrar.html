@@ -90,6 +90,11 @@
             border-color: #2563eb;
         }
 
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
+        }
         .erro {
             color: #dc2626;
             font-size: 14px;
@@ -159,32 +164,32 @@
             <div class="campo">
                 <label>Nome</label>
                 <input type="text" th:field="*{nome}">
-                <span class="erro" th:errors="*{nome}"></span>
+                <span class="error" th:errors="*{nome}"></span>
             </div>
 
             <div class="campo">
                 <label>E-mail</label>
                 <input type="email" th:field="*{email}">
-                <span class="erro" th:errors="*{email}"></span>
-                <span th:text="${erro}"></span>
+                <span class="error" th:errors="*{email}"></span>
+                <span class="erro" th:text="${erro}"></span>
             </div>
 
             <div class="campo">
                 <label>Senha</label>
                 <input type="password" th:field="*{senha}">
-                <span class="erro" th:errors="*{senha}"></span>
+                <span class="error" th:errors="*{senha}"></span>
             </div>
 
             <div class="campo">
                 <label>Matrícula</label>
                 <input type="text" th:field="*{matricula}">
-                <span class="erro" th:errors="*{matricula}"></span>
+                <span class="error" th:errors="*{matricula}"></span>
             </div>
 
             <div class="campo">
                 <label>Data de Nascimento</label>
                 <input type="date" th:field="*{dataNascimento}">
-                <span class="erro" th:errors="*{dataNascimento}"></span>
+                <span class="error" th:errors="*{dataNascimento}"></span>
             </div>
 
             <div class="botoes">
@@ -208,6 +213,19 @@
 <footer>
     © 2026 - Sistema Gerenciador de Recursos
 </footer>
+<script>
+    const campo = document.getElementById("dataNascimento");
+
+    const hoje = new Date();
+
+    // Data máxima: hoje
+    campo.max = hoje.toISOString().split("T")[0];
+
+    // Data mínima: hoje - 500 anos
+    const dataMinima = new Date();
+    dataMinima.setFullYear(dataMinima.getFullYear() - 500);
+    campo.min = dataMinima.toISOString().split("T")[0];
+</script>
 
 </body>
 </html>
