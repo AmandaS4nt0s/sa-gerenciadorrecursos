@@ -75,28 +75,57 @@ public class PageController {
     }
 
     @GetMapping("/colaboradoratualizar/{id}")
-    public String atualizarColaborador(@PathVariable Long id, Model model) {
+    public String atualizarColaborador(@PathVariable Long id, Model model, HttpSession session) {
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/";
+        }
+
         ColaboradorDto colaborador = colaboradorService.buscarPorId(id);
         model.addAttribute("colaborador", colaborador);
         return "colaboradoratualizar";
     }
     //-------------------------- RECURSO --------------------------
     @GetMapping("/recursocadastrar")
-    public String cadastrarRecurso(Model model){
+    public String cadastrarRecurso(Model model, HttpSession session){
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/";
+        }
         model.addAttribute("recurso", new RecursoDto());
         return "recursocadastrar";
     }
     @GetMapping("/recursolista")
-    public String recursoLista(Model model){
+    public String recursoLista(Model model, HttpSession session){
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/";
+        }
+
         model.addAttribute("recurso", recursoService.listarRecursos());
         return "recursolista";
     }
+
     @GetMapping("/recursoatualizar/{id}")
-    public String atualizarRecurso(@PathVariable Long id, Model model) {
+    public String atualizarRecurso(@PathVariable Long id, Model model, HttpSession session) {
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null) {
+            return "redirect:/";
+        }
+
         RecursoDto recurso = recursoService.buscarPorId(id);
         model.addAttribute("recurso", recurso);
         return "recursoatualizar";
     }
+
     //-------------------------- RESERVA --------------------------
     @GetMapping("/reservacadastrar")
     public String cadastrarReserva(Model model) {

@@ -66,7 +66,14 @@ public class ColaboradorController {
             @Valid @ModelAttribute("colaborador") ColaboradorDto colaboradorDto,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
-            Model model) {
+            Model model, HttpSession session) {
+
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/";
+        }
 
         if (bindingResult.hasErrors()) {
             return "colaboradorcadastrar";
