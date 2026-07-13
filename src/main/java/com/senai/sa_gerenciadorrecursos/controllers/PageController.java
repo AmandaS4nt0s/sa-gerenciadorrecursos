@@ -125,7 +125,13 @@ public class PageController {
 
     //-------------------------- RESERVA --------------------------
     @GetMapping("/reservacadastrar")
-    public String reservaCadastrar(Model model) {
+    public String reservaCadastrar(Model model, HttpSession session) {
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null) {
+            return "redirect:/";
+        }
 
         model.addAttribute("reserva", new ReservaRequestDto());
 
@@ -138,7 +144,13 @@ public class PageController {
         return "reservacadastrar";
     }
     @GetMapping("/reservalista")
-    public String listarReservas(Model model) {
+    public String listarReservas(Model model,HttpSession session) {
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null) {
+            return "redirect:/";
+        }
         model.addAttribute("reservas", reservaService.listarReservas());
         return "reservalista";
     }
