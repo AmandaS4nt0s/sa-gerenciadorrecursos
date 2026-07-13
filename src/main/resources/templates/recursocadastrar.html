@@ -192,6 +192,20 @@
             margin-top: 30px;
             padding-bottom: 20px;
         }
+        .campo input,
+        .campo select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+        .campo input:focus,
+        .campo select:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
     </style>
 </head>
 <body>
@@ -222,9 +236,56 @@
             </div>
 
             <div class="campo">
-                <label>Tipo</label>
-                <input type="text" th:field="*{tipo}">
+
+                <label>Tipo de Recurso</label>
+
+                <select th:field="*{tipo}">
+                    <option value="">Selecione um tipo...</option>
+
+                    <option value="SALA">
+                        Sala
+                    </option>
+
+                    <option value="EQUIPAMENTO">
+                        Equipamento
+                    </option>
+
+                    <option value="VEICULO">
+                        Veículo
+                    </option>
+
+                    <option value="MAQUINA">
+                        Máquina
+                    </option>
+
+                    <option value="MOBILIARIO">
+                        Mobiliário
+                    </option>
+
+                    <option value="TECNOLOGIA">
+                        Tecnologia
+                    </option>
+
+                    <option value="AUDITORIO">
+                        Auditório
+                    </option>
+
+                    <option value="ESPACO_EVENTOS">
+                        Espaço para Eventos
+                    </option>
+
+                    <option value="MATERIAL">
+                        Material
+                    </option>
+
+                    <option value="OUTRO">
+                        Outro
+                    </option>
+
+                </select>
+
                 <span class="erro" th:errors="*{tipo}"></span>
+
             </div>
 
             <!-- SEÇÃO DE DIAS DA SEMANA ADICIONADA AQUI -->
@@ -236,29 +297,35 @@
                     <button type="button" class="btn-atalho" onclick="selecionarDias('todos')">Todos</button>
                     <button type="button" class="btn-atalho" onclick="selecionarDias('uteis')">Dias Úteis</button>
                     <button type="button" class="btn-atalho" onclick="selecionarDias('fds')">Finais de Semana</button>
-                    <button type="button" class="btn-atalho btn-limpar" onclick="selecionarDias('nenhum')">Limpar</button>
+                    <button type="button" class="btn-atalho btn-limpar" onclick="selecionarDias('nenhum')">Limpar
+                    </button>
                 </div>
 
                 <!-- Grid de Checkboxes para Cadastro -->
                 <div class="grid-dias">
                     <label class="checkbox-container">
-                        <input type="checkbox" class="dia-check" th:field="*{segundaFeira}" value="MONDAY" data-tipo="util">
+                        <input type="checkbox" class="dia-check" th:field="*{segundaFeira}" value="MONDAY"
+                               data-tipo="util">
                         Segunda
                     </label>
                     <label class="checkbox-container">
-                        <input type="checkbox" class="dia-check" th:field="*{tercaFeira}" value="TUESDAY" data-tipo="util">
+                        <input type="checkbox" class="dia-check" th:field="*{tercaFeira}" value="TUESDAY"
+                               data-tipo="util">
                         Terça
                     </label>
                     <label class="checkbox-container">
-                        <input type="checkbox" class="dia-check" th:field="*{quartaFeira}" value="WEDNESDAY" data-tipo="util">
+                        <input type="checkbox" class="dia-check" th:field="*{quartaFeira}" value="WEDNESDAY"
+                               data-tipo="util">
                         Quarta
                     </label>
                     <label class="checkbox-container">
-                        <input type="checkbox" class="dia-check" th:field="*{quintaFeira}" value="THURSDAY" data-tipo="util">
+                        <input type="checkbox" class="dia-check" th:field="*{quintaFeira}" value="THURSDAY"
+                               data-tipo="util">
                         Quinta
                     </label>
                     <label class="checkbox-container">
-                        <input type="checkbox" class="dia-check" th:field="*{sextaFeira}" value="FRIDAY" data-tipo="util">
+                        <input type="checkbox" class="dia-check" th:field="*{sextaFeira}" value="FRIDAY"
+                               data-tipo="util">
                         Sexta
                     </label>
                     <label class="checkbox-container">

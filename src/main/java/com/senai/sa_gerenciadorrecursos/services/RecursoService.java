@@ -4,8 +4,7 @@ import com.senai.sa_gerenciadorrecursos.dtos.RecursoDto;
 import com.senai.sa_gerenciadorrecursos.entities.RecursoEntity;
 import com.senai.sa_gerenciadorrecursos.repositories.RecursoRepository;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class RecursoService {
         this.recursoRepository = recursoRepository;
     }
 
-    public void cadastrarRecurso(RecursoDto recursoDto){
+    public void cadastrarRecurso(RecursoDto recursoDto) {
         validarRecurso(recursoDto);
         recursoRepository.save(converterDtoParaEntity(recursoDto));
     }
@@ -64,7 +63,6 @@ public class RecursoService {
         recursoRepository.deleteById(id);
     }
 
-    // Validações do RF02
     private void validarRecurso(RecursoDto recursoDto) {
         if (recursoDto.getDescricao() == null || recursoDto.getDescricao().isBlank()) {
             throw new RuntimeException("A descrição do recurso é obrigatória.");
@@ -72,6 +70,23 @@ public class RecursoService {
         if (recursoDto.getTipo() == null || recursoDto.getTipo().isBlank()) {
             throw new RuntimeException("O tipo do recurso é obrigatório.");
         }
+        List<String> tiposPermitidos = List.of(
+                "SALA",
+                "EQUIPAMENTO",
+                "VEICULO",
+                "MAQUINA",
+                "MOBILIARIO",
+                "TECNOLOGIA",
+                "AUDITORIO",
+                "ESPACO_EVENTOS",
+                "MATERIAL",
+                "OUTRO"
+        );
+
+        if (!tiposPermitidos.contains(recursoDto.getTipo())) {
+            throw new RuntimeException("Tipo de recurso inválido.");
+        }
+
         if (recursoDto.getDataFim() != null && recursoDto.getDataInicio() != null &&
                 recursoDto.getDataFim().isBefore(recursoDto.getDataInicio())) {
             throw new RuntimeException("A data final não pode ser anterior à data inicial.");
@@ -80,9 +95,10 @@ public class RecursoService {
                 recursoDto.getHoraFim().isBefore(recursoDto.getHoraInicio())) {
             throw new RuntimeException("Horário final deve ser maior que o horário inicial.");
         }
+
     }
 
-    private RecursoDto converterEntityParaDto(RecursoEntity recurso){
+    private RecursoDto converterEntityParaDto(RecursoEntity recurso) {
         RecursoDto recursoDto = new RecursoDto();
         recursoDto.setId(recurso.getId());
         recursoDto.setDescricao(recurso.getDescricao());
@@ -101,7 +117,7 @@ public class RecursoService {
         return recursoDto;
     }
 
-    private RecursoEntity converterDtoParaEntity(RecursoDto recursoDto){
+    private RecursoEntity converterDtoParaEntity(RecursoDto recursoDto) {
         RecursoEntity recurso = new RecursoEntity();
         recurso.setDescricao(recursoDto.getDescricao());
         recurso.setTipo(recursoDto.getTipo());
