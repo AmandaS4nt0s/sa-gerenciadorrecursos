@@ -1,0 +1,296 @@
+CREATE DATABASE IF NOT EXISTS sa_gerenciadorrecursos;
+
+USE sa_gerenciadorrecursos;
+
+CREATE TABLE colaborador (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    matricula VARCHAR(100) NOT NULL UNIQUE,
+    data_nascimento DATE NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE recurso (
+
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+
+    descricao VARCHAR(255) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+
+    segunda_feira BOOLEAN DEFAULT FALSE,
+    terca_feira BOOLEAN DEFAULT FALSE,
+    quarta_feira BOOLEAN DEFAULT FALSE,
+    quinta_feira BOOLEAN DEFAULT FALSE,
+    sexta_feira BOOLEAN DEFAULT FALSE,
+    sabado BOOLEAN DEFAULT FALSE,
+    domingo BOOLEAN DEFAULT FALSE,
+
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+
+    hora_inicio TIME NOT NULL,
+    hora_fim TIME NOT NULL,
+
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE reserva (
+
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+
+
+    colaborador_id BIGINT NOT NULL,
+
+    recurso_id BIGINT NOT NULL,
+
+
+    data_reserva DATE NOT NULL,
+
+    hora_inicio_reserva TIME NOT NULL,
+
+    hora_fim_reserva TIME NOT NULL,
+
+
+    status VARCHAR(20) DEFAULT 'ATIVA',
+
+    data_hora_cancelamento DATETIME,
+
+    observacao TEXT,
+
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+
+    CONSTRAINT fk_reserva_colaborador
+
+        FOREIGN KEY (colaborador_id)
+
+        REFERENCES colaborador(id)
+
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_reserva_recurso
+
+        FOREIGN KEY (recurso_id)
+
+        REFERENCES recurso(id)
+
+        ON DELETE CASCADE
+
+);
+
+CREATE INDEX idx_colaborador_matricula
+ON colaborador(matricula);
+
+
+CREATE INDEX idx_recurso_tipo
+ON recurso(tipo);
+
+
+CREATE INDEX idx_reserva_colaborador
+ON reserva(colaborador_id);
+
+
+CREATE INDEX idx_reserva_recurso
+ON reserva(recurso_id);
+
+
+CREATE INDEX idx_reserva_data
+ON reserva(data_reserva);
+
+
+CREATE INDEX idx_reserva_status
+ON reserva(status);
+
+INSERT INTO recurso
+(
+descricao,
+tipo,
+segunda_feira,
+terca_feira,
+quarta_feira,
+quinta_feira,
+sexta_feira,
+sabado,
+domingo,
+data_inicio,
+data_fim,
+hora_inicio,
+hora_fim
+)
+VALUES
+
+(
+'Sala de Reunião Executiva',
+'SALA',
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+FALSE,
+FALSE,
+'2026-07-13',
+'2027-07-13',
+'08:00',
+'18:00'
+),
+
+(
+'Notebook Dell Latitude - Patrimônio 001',
+'EQUIPAMENTO',
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+FALSE,
+FALSE,
+'2026-07-13',
+'2027-07-13',
+'08:00',
+'18:00'
+),
+
+(
+'Projetor Multimídia Epson',
+'EQUIPAMENTO',
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+FALSE,
+FALSE,
+'2026-07-13',
+'2027-07-13',
+'08:00',
+'18:00'
+),
+
+(
+'Veículo Fiat Fiorino - Frota 01',
+'VEICULO',
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+FALSE,
+FALSE,
+'2026-07-13',
+'2027-07-13',
+'08:00',
+'17:00'
+),
+
+(
+'Laboratório de Informática 01',
+'SALA',
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+FALSE,
+FALSE,
+'2026-07-13',
+'2027-07-13',
+'08:00',
+'18:00'
+),
+
+(
+'Auditório Corporativo',
+'AUDITORIO',
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+FALSE,
+'2026-07-13',
+'2027-07-13',
+'08:00',
+'18:00'
+),
+
+(
+'Sala de Treinamento Técnico',
+'SALA',
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+TRUE,
+FALSE,
+FALSE,
+'2026-07-13',
+'2027-07-13',
+'08:00',
+'18:00'
+);
+
+INSERT INTO colaborador
+(
+nome,
+email,
+senha,
+matricula,
+data_nascimento
+)
+VALUES
+
+(
+'Amanda Oliveira',
+'amanda.oliveira@empresa.com.br',
+'senha123',
+'COL001',
+'1998-03-12'
+),
+
+(
+'Carlos Henrique Souza',
+'carlos.souza@empresa.com.br',
+'senha456',
+'COL002',
+'1990-07-25'
+),
+
+(
+'Juliana Martins',
+'juliana.martins@empresa.com.br',
+'senha789',
+'COL003',
+'1995-11-08'
+),
+
+(
+'Ricardo Almeida',
+'ricardo.almeida@empresa.com.br',
+'senha321',
+'COL004',
+'1988-02-19'
+),
+
+(
+'Fernanda Costa',
+'fernanda.costa@empresa.com.br',
+'senha654',
+'COL005',
+'2000-09-30'
+);
