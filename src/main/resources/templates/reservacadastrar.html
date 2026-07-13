@@ -158,27 +158,33 @@
               th:object="${reserva}"
               method="post">
 
-            <!-- Campo Colaborador Modificado -->
+            <!-- Campo Colaborador -->
             <div class="campo">
                 <label>Colaborador</label>
                 <select th:field="*{colaboradorId}">
                     <option value="">Selecione um colaborador...</option>
+
                     <option th:each="colab : ${listaColaboradores}"
                             th:value="${colab.id}"
-                            th:text="${colab.nome}"></option>
+                            th:text="${colab.nome}">
+                    </option>
                 </select>
+
                 <span class="erro" th:errors="*{colaboradorId}"></span>
             </div>
 
-            <!-- Campo Recurso Modificado -->
+            <!-- Campo Recurso -->
             <div class="campo">
                 <label>Recurso</label>
                 <select th:field="*{recursoId}">
                     <option value="">Selecione um recurso...</option>
+
                     <option th:each="rec : ${listaRecursos}"
                             th:value="${rec.id}"
-                            th:text="${rec.nome}"></option>
+                            th:text="${rec.descricao}">
+                    </option>
                 </select>
+
                 <span class="erro" th:errors="*{recursoId}"></span>
             </div>
 
@@ -198,6 +204,11 @@
                 <label>Hora Fim</label>
                 <input type="time" th:field="*{horaFim}">
                 <span class="erro" th:errors="*{horaFim}"></span>
+            </div>
+
+            <div class="erro"
+                 th:if="${erro}"
+                 th:text="${erro}">
             </div>
 
             <div class="botoes">

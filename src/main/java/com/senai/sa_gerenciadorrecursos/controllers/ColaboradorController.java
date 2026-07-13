@@ -86,15 +86,27 @@ public class ColaboradorController {
     }
 
     @PostMapping("/colaboradoratualizar/{id}")
-    public String atualizarColaborador(Model model, @PathVariable Long id, @Valid @ModelAttribute("colaborador") ColaboradorDto
-            colaboradorDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String atualizarColaborador(
+            Model model,
+            @PathVariable Long id,
+            @Valid @ModelAttribute("colaborador") ColaboradorDto colaboradorDto,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "colaboradoratualizar";
         }
-        redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso!");
-        colaboradorService.atualizarColaborador(colaboradorDto, id);
-        return "redirect:/colaboradorlista";
+
+        try {
+            colaboradorService.atualizarColaborador(colaboradorDto, id);
+
+            redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso!");
+            return "redirect:/colaboradorlista";
+
+        } catch (RuntimeException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "colaboradoratualizar";
+        }
     }
 
     @DeleteMapping("/colaboradorexcluir/{id}")

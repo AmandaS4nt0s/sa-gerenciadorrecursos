@@ -18,11 +18,11 @@ public class ColaboradorService {
         this.colaboradorRepository = colaboradorRepository;
     }
     public void cadastrarColaborador(ColaboradorDto colaboradorDto){
-        if (colaboradorRepository.findByEmail(colaboradorDto.getEmail()).isPresent()) {
+
+        if (colaboradorRepository.existsByEmail(colaboradorDto.getEmail())) {
             throw new RuntimeException("E-mail já cadastrado.");
         }
         ColaboradorEntity colaboradorEntity = converterDtoParaEntity(colaboradorDto);
-        colaboradorEntity.setSenha(colaboradorDto.getSenha());
         colaboradorRepository.save(colaboradorEntity);
     }
 
@@ -41,18 +41,23 @@ public class ColaboradorService {
     }
 
     public void atualizarColaborador(ColaboradorDto colaboradorDto, Long id) {
+
         ColaboradorEntity colaboradorEntity = colaboradorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
 
+        if (colaboradorRepository.existsByEmailAndIdNot(colaboradorDto.getEmail(), id)) {
+            throw new RuntimeException("E-mail já cadastrado.");
+        }
+
         colaboradorEntity.setNome(colaboradorDto.getNome());
         colaboradorEntity.setEmail(colaboradorDto.getEmail());
-        colaboradorEntity.setSenha(colaboradorDto.getSenha());
         colaboradorEntity.setMatricula(colaboradorDto.getMatricula());
         colaboradorEntity.setDataNascimento(colaboradorDto.getDataNascimento());
 
         if (colaboradorDto.getSenha() != null && !colaboradorDto.getSenha().isEmpty()) {
             colaboradorEntity.setSenha(colaboradorDto.getSenha());
         }
+
         colaboradorRepository.save(colaboradorEntity);
     }
 

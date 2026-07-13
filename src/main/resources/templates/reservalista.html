@@ -164,6 +164,17 @@
 
         <h2>Reservas Cadastradas</h2>
 
+        <div th:if="${sucesso}"
+             style="color: green; margin: 10px;">
+            <span th:text="${sucesso}"></span>
+        </div>
+
+
+        <div th:if="${erro}"
+             style="color: red; margin: 10px;">
+            <span th:text="${erro}"></span>
+        </div>
+
         <div class="mensagem"
              th:if="${mensagem}"
              th:text="${mensagem}">
@@ -192,32 +203,54 @@
                 <th>Hora Início</th>
                 <th>Hora Fim</th>
                 <th>Status</th>
+                <th>Data Cancelamento</th>
+                <th>Observação</th>
                 <th>Ações</th>
             </tr>
             </thead>
 
             <tbody>
 
-            <tr th:each="reserva : ${reserva}">
+            <tr th:each="reserva : ${reservas}">
                 <td th:text="${reserva.id}"></td>
                 <td th:text="${reserva.nomeColaborador}"></td>
                 <td th:text="${reserva.descricaoRecurso}"></td>
-                <td th:text="${#dates.format(reserva.data, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(reserva.data, 'dd/MM/yyyy')}"></td>
                 <td th:text="${reserva.horaInicio}"></td>
                 <td th:text="${reserva.horaFim}"></td>
-                <td th:text="${reserva.status}"></td>
+                <td th:text="${reserva.cancelamento == null ? 'Ativa' : 'Cancelada'}"></td>
+                <td th:text="${reserva.cancelamento != null ? #temporals.format(reserva.cancelamento, 'dd/MM/yyyy HH:mm') : '-'}"></td>
+                <td th:text="${reserva.observacao != null ? reserva.observacao : '-'}"></td>
 
                 <td>
-                    <button type="button"
-                            class="cancelar"
-                            th:attr="onclick=|cancelarReserva(${reserva.id})|">
-                        Cancelar
-                    </button>
+
+                    <form th:if="${reserva.cancelamento == null}"
+                          th:action="@{/reservacancelar/{id}(id=${reserva.id})}"
+                          method="post"
+                          th:id="'formCancelar' + ${reserva.id}">
+
+                        <input type="hidden"
+                               name="observacao"
+                               th:id="'observacao' + ${reserva.id}">
+
+                        <button type="button"
+                                class="cancelar"
+                                th:attr="onclick=|cancelarReserva(${reserva.id})|">
+                            Cancelar
+                        </button>
+
+                    </form>
+
+                    <span th:if="${reserva.cancelamento != null}">
+                    Cancelada
+                    </span>
+
                 </td>
+
             </tr>
 
             <tr th:if="${#lists.isEmpty(reservas)}">
-                <td colspan="8" class="vazio">
+                <td colspan="10" class="vazio">
                     Nenhuma reserva cadastrada.
                 </td>
             </tr>
@@ -233,6 +266,8 @@
 <footer>
     © 2026 - Sistema Gerenciador de Recursos
 </footer>
+
+<script th:src="@{/cancelar_reserva.js}"></script>
 
 </body>
 </html>

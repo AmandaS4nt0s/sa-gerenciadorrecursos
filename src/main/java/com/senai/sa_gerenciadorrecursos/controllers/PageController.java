@@ -13,9 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 public class PageController {
@@ -99,19 +96,21 @@ public class PageController {
     }
     //-------------------------- RESERVA --------------------------
     @GetMapping("/reservacadastrar")
-    public String cadastrarReserva(Model model) {
+    public String reservaCadastrar(Model model) {
+
         model.addAttribute("reserva", new ReservaRequestDto());
+
+        model.addAttribute("listaColaboradores",
+                colaboradorService.listarColaboradores());
+
+        model.addAttribute("listaRecursos",
+                recursoService.listarRecursos());
+
         return "reservacadastrar";
     }
     @GetMapping("/reservalista")
     public String listarReservas(Model model) {
         model.addAttribute("reservas", reservaService.listarReservas());
         return "reservalista";
-    }
-    @GetMapping("/reservacancelar")
-    public String cancelarReserva(Long id, String observacao, RedirectAttributes redirectAttributes) {
-        reservaService.cancelarReserva(id, observacao);
-        redirectAttributes.addFlashAttribute("mensagem", "Reserva cancelada com sucesso!");
-        return "redirect:/reservalista";
     }
 }
