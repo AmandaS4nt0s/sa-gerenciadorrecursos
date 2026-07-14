@@ -51,15 +51,16 @@ public class PageController {
 
     //-------------------------- COLABORADOR --------------------------
     @GetMapping("/colaboradorcadastrar")
-    public String colaboradorCadastrar(Model model,HttpSession session) {
+    public String colaboradorCadastrar(Model model, HttpSession session) {
 
         SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
 
-        if (sessaoDto == null){
+        if (sessaoDto == null) {
             return "redirect:/";
         }
 
-        model.addAttribute("colaborador", sessaoDto);
+        model.addAttribute("colaborador", new ColaboradorDto());
+
         return "colaboradorcadastrar";
     }
 

@@ -6,6 +6,7 @@ public final class SessaoUtil {
 
     //--Nome da variável que vamos usar para armazenar os dados da sessão
     private static final String USUARIO_LOGADO = "usuarioLogado";
+    public Object usuarioLogado;
 
     private SessaoUtil() {
     }
