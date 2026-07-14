@@ -15,12 +15,15 @@ public class RecursoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "descricao")
     @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
+
     @Column(name = "tipo")
     @NotBlank(message = "O tipo é obrigatório.")
     private String tipo;
+
     @Column(name = "segunda_feira")
     private Boolean segundaFeira;
     @Column(name = "terca_feira")
@@ -35,8 +38,10 @@ public class RecursoEntity {
     private Boolean sabado;
     @Column(name = "domingo")
     private Boolean domingo;
+
     @Column(name = "data_inicio")
     private LocalDate dataInicio;
+
     @Column(name = "data_fim")
     @FutureOrPresent(message = "A data de fim não pode estar no passado.")
     private LocalDate dataFim;

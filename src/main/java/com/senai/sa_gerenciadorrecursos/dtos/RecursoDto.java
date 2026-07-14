@@ -8,8 +8,10 @@ import java.util.List;
 public class RecursoDto {
 
     private Long id;
+
     @NotBlank(message = "A Descrição é obrigatória.")
     private String descricao;
+
     @NotBlank(message = "O Tipo é obrigatório.")
     private String tipo;
 
@@ -20,6 +22,7 @@ public class RecursoDto {
     private Boolean sextaFeira;
     private Boolean sabado;
     private Boolean domingo;
+
 
     private LocalDate dataInicio;
     private LocalDate dataFim;
