@@ -1,8 +1,6 @@
 package com.senai.sa_gerenciadorrecursos.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -12,15 +10,22 @@ public class ColaboradorDto {
     private Long id;
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
+
     @Email
     @NotBlank(message = "O e-mail é obrigatório.")
+    @Email(message = "Digite um e-mail válido.")
     private String email;
+
     @NotBlank(message = "A senha é obrigatória.")
+    @Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres.")
     private String senha;
+
     @NotBlank(message = "A matrícula é obrigatória.")
     private String matricula;
-    @Past(message = "A data de nascimento não pode estar no futuro.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
+    @NotNull(message = "A data de nascimento é obrigatória.")
+    @Past(message = "A data de nascimento deve ser anterior à data atual.")
+    @PastOrPresent(message = "A data de nascimento não pode estar no futuro.")
     private LocalDate dataNascimento;
 
     public ColaboradorDto() {
