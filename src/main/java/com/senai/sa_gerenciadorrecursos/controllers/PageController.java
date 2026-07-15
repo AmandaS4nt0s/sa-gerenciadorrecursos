@@ -67,7 +67,6 @@ public class PageController {
     @GetMapping("/colaboradorlista")
     public String colaboradorLista(Model model,HttpSession session) {
 
-
         SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
 
         if (sessaoDto == null){

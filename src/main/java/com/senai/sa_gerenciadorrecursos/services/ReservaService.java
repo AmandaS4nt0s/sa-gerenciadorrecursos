@@ -33,17 +33,14 @@ public class ReservaService {
     }
 
     public ReservaResponseDto cadastrarReserva(ReservaRequestDto reservaRequestDto) {
-        validarReserva(reservaRequestDto);
 
-        System.out.println("Colaborador ID: " + reservaRequestDto.getColaboradorId());
-        System.out.println("Recurso ID: " + reservaRequestDto.getRecursoId());
+        RecursoEntity recurso = recursoRepository.findById(reservaRequestDto.getRecursoId()).orElseThrow(() -> new RuntimeException("Recurso não encontrado."));
 
-        ReservaEntity reservaEntity = converterReservaRequestDtoParaEntity(reservaRequestDto);
-
-        RecursoEntity recurso = recursoRepository.findById(reservaRequestDto.getRecursoId()).orElseThrow(() -> new RuntimeException("Recurso não encontrado"));
-
+        validarReserva(reservaRequestDto, recurso);
 
         validarDisponibilidade(reservaRequestDto, recurso);
+
+        ReservaEntity reservaEntity = converterReservaRequestDtoParaEntity(reservaRequestDto);
 
         reservaRepository.save(reservaEntity);
 
@@ -93,23 +90,32 @@ public class ReservaService {
         return converterEntityParaReservaResponseDto(reservaCancelada);
     }
 
-    private void validarReserva(ReservaRequestDto reservaRequestDto) {
+    private void validarReserva(ReservaRequestDto dto, RecursoEntity recurso) {
 
-        if (reservaRequestDto.getData() == null || reservaRequestDto.getData().isBefore(LocalDate.now())) {
+        if (dto.getData() == null) {
+            throw new RuntimeException("Informe a data da reserva.");
+        }
+
+        if (dto.getHoraInicio() == null || dto.getHoraFim() == null) {
+            throw new RuntimeException("Informe horário inicial e final.");
+        }
+
+        if (dto.getData().isBefore(LocalDate.now())) {
             throw new RuntimeException("A data da reserva não pode estar no passado.");
         }
 
-        if (reservaRequestDto.getHoraInicio() != null && reservaRequestDto.getHoraInicio().isBefore(LocalTime.of(8, 0))) {
-            throw new RuntimeException("Horário inicial deve ser a partir das 08h.");
+        if (dto.getData().equals(LocalDate.now()) && dto.getHoraInicio().isBefore(LocalTime.now())) {
+
+            throw new RuntimeException("Não é possível reservar um horário que já passou.");
         }
 
-        if (reservaRequestDto.getHoraFim() != null && reservaRequestDto.getHoraFim().isAfter(LocalTime.of(18, 0))) {
-            throw new RuntimeException("Horário final deve ser até as 18h.");
+        if (!dto.getHoraFim().isAfter(dto.getHoraInicio())) {
+            throw new RuntimeException("O horário final deve ser maior que o horário inicial.");
         }
 
-        if (reservaRequestDto.getHoraInicio() != null && reservaRequestDto.getHoraFim() != null && reservaRequestDto.getHoraFim().isBefore(reservaRequestDto.getHoraInicio())) {
+        if (dto.getData().isBefore(recurso.getDataInicio()) || dto.getData().isAfter(recurso.getDataFim())) {
 
-            throw new RuntimeException("Horário final deve ser maior que o horário inicial.");
+            throw new RuntimeException("O recurso não está disponível nesta data.");
         }
     }
 
@@ -138,15 +144,19 @@ public class ReservaService {
 
         validarDiaDisponivel(recurso, dia);
 
-
         if (dto.getHoraInicio().isBefore(recurso.getHoraInicio()) || dto.getHoraFim().isAfter(recurso.getHoraFim())) {
 
-            throw new RuntimeException("Horário fora do período disponível do recurso.");
+            throw new RuntimeException("O recurso está disponível apenas das " + recurso.getHoraInicio() + " às " + recurso.getHoraFim() + ".");
         }
 
         List<ReservaEntity> reservasExistentes = reservaRepository.findByRecursoIdAndData(recurso.getId(), dto.getData());
 
         for (ReservaEntity reserva : reservasExistentes) {
+
+            // Ignora reservas canceladas
+            if (reserva.getCancelamento() != null) {
+                continue;
+            }
 
             boolean conflito = dto.getHoraInicio().isBefore(reserva.getHoraFim()) && dto.getHoraFim().isAfter(reserva.getHoraInicio());
 
@@ -154,7 +164,7 @@ public class ReservaService {
 
                 String sugestao = encontrarSugestoesHorario(recurso, dto.getData(), dto.getHoraInicio());
 
-                throw new RuntimeException("Este recurso já está reservado neste horário. " + sugestao);
+                throw new RuntimeException("Este recurso já está reservado neste horário.\n\n" + sugestao);
             }
         }
     }
@@ -163,38 +173,21 @@ public class ReservaService {
 
 
         List<ReservaEntity> reservas = reservaRepository.findByRecursoIdAndData(recurso.getId(), data);
-
-
         List<LocalTime[]> horariosLivres = new ArrayList<>();
-
-
         LocalTime inicio = recurso.getHoraInicio();
-
 
         while (inicio.plusHours(1).isBefore(recurso.getHoraFim()) || inicio.plusHours(1).equals(recurso.getHoraFim())) {
 
-
             LocalTime fim = inicio.plusHours(1);
-
-
             LocalTime inicioTeste = inicio;
             LocalTime fimTeste = fim;
-
-
             boolean ocupado = reservas.stream().anyMatch(r -> inicioTeste.isBefore(r.getHoraFim()) && fimTeste.isAfter(r.getHoraInicio()));
-
-
             if (!ocupado) {
 
                 horariosLivres.add(new LocalTime[]{inicio, fim});
-
             }
-
-
             inicio = inicio.plusHours(1);
         }
-
-
         if (horariosLivres.isEmpty()) {
 
             return "Não existem horários disponíveis neste dia.";
