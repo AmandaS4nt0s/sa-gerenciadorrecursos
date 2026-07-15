@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-gerenciadorrecursos
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sa_gerenciadorrecursos
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: senha123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - gerenciadorrecursos-network
+
+  api:
+    image: amandacgsantos/sa_gerenciadorrecursos_valtos:1.0
+    container_name: api-gerenciadorrecursos-valtos
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sa_gerenciadorrecursos
+      SPRING_DATASOURCE_USERNAME: usuario
+      SPRING_DATASOURCE_PASSWORD: senha123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - gerenciadorrecursos-network
+
+volumes:
+  mysql_data:
+
+networks:
+  gerenciadorrecursos-network:
+    driver: bridge
